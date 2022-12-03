@@ -14,6 +14,6 @@ familiarizing oneself with how Mats works, reducing the noise from support-, uti
 ## Mats<sup>3</sup> v0.19
 
 - [API Only](mats3/0.19/api/index.html)
-- [Classic](mats3/0.19/classic/index.html)
-- [Modern](mats3/0.19/modern/index.html)
+- [Classic JavaDoc](mats3/0.19/classic/index.html)
+- [Modern JavaDoc](mats3/0.19/modern/index.html)
 
