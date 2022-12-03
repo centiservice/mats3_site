@@ -20,8 +20,11 @@ description: >- # this means to ignore newlines until "baseurl:"
   Inter-Service Communication library providing callable messaging-based service endpoints.
 twitter_username: stolsvik
 github_username: stolsvik
-minimal_mistakes_skin: default
+minimal_mistakes_skin: dark
 search: true
+
+# Localhost development port when using 'serve'
+port: 4000
 
 # EndreXY 2022-08-07: Based on https://github.com/github/pages-gem/issues/399#issuecomment-301827749
 # .. to fix the problem "GitHub Metadata: No GitHub API authentication could be found.
