@@ -9,5 +9,28 @@ main:
 #    url: /categories/
 #  - title: "Tags"
 #    url: /tags/
+  - title: "License"
+    url: /license/
   - title: "About"
     url: /about/
+
+# documentation links
+docs:
+  - title: Documentation
+    url: /docs/
+  - title: Features
+    children:
+      - title: "Message-Oriented RPC"
+        url: /docs/message-oriented-rpc/
+      - title: "Dev&Ops happiness"
+        url: /docs/devops-happiness/
+      - title: "Sync-Async bridge"
+        url: /docs/sync-async-bridge/
+      - title: "Intercept API"
+        url: /docs/interception/
+      - title: "MatsBrokerMonitor"
+        url: /docs/matsbrokermonitor/
+  - title: Customization
+    children:
+      - title: "Test"
+        url: /docs/test/

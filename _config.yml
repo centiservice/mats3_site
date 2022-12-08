@@ -20,6 +20,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Inter-Service Communication library providing callable messaging-based service endpoints.
 twitter_username: stolsvik
 github_username: stolsvik
+url: https://mats3.io
 minimal_mistakes_skin: dark
 search: true
 
@@ -42,7 +43,6 @@ timezone: Europe/Oslo # https://en.wikipedia.org/wiki/List_of_tz_database_time_z
 
 include:
   - _pages
-#  - javadoc
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -57,6 +57,12 @@ include:
 #   - vendor/ruby/
 exclude:
   - EndreXY*
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:path/
 
 # Plugins (previously gems:)
 plugins:
@@ -110,6 +116,18 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # _docs
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: single
+      read_time: false
+      author_profile: false
+      share: false
+      comments: false
+      sidebar:
+        nav: "docs"
 
 category_archive:
   type: liquid
