@@ -18,19 +18,19 @@ main:
 docs:
   - title: Documentation
     url: /docs/
-  - title: Features
+  - title: Walkthrough
     children:
       - title: "Message-Oriented RPC"
         url: /docs/message-oriented-rpc/
-      - title: "Dev&Ops happiness"
-        url: /docs/devops-happiness/
+      - title: "Mats Flow Initiation"
+        url: /docs/mats-flow-initiation/
       - title: "Sync-Async bridge"
         url: /docs/sync-async-bridge/
+      - title: "SpringConfig"
+        url: /docs/springconfig/
+      - title: "Dev&Ops happiness"
+        url: /docs/devops-happiness/
       - title: "Intercept API"
         url: /docs/interception/
       - title: "MatsBrokerMonitor"
         url: /docs/matsbrokermonitor/
-  - title: Customization
-    children:
-      - title: "Test"
-        url: /docs/test/

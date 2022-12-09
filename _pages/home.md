@@ -22,18 +22,18 @@ feature_row:
     url: "/docs/message-oriented-rpc/"
     btn_class: "btn--primary"
     btn_label: "Learn more"
-  - title: "Dev & Ops happiness"
-    excerpt: "Simple code, easy to understand with great introspection, painless debugging."
-    url: "/docs/devops-happiness/"
-    btn_class: "btn--primary"
-    btn_label: "Learn more"
   - title: "Sync-Async bridge"
-    excerpt: "_MatsFuturizer_ enables a sync setting like a Servlet to invoke a Mats Endpoint"
+    excerpt: "_MatsFuturizer_ enables a sync setting, like a Servlet, to invoke a Mats Endpoint"
     url: "/docs/sync-async-bridge/"
     btn_class: "btn--primary"
     btn_label: "Learn more"
+  - title: "Dev & Ops happiness"
+    excerpt: "Simple code, easy to understand with great introspection and painless debugging."
+    url: "/docs/devops-happiness/"
+    btn_class: "btn--primary"
+    btn_label: "Learn more"
   - title: "Intercept API"
-    excerpt: "Hook Flow initiation and processing. Plugins for logging (slf4j) and metrics (micrometer)."
+    excerpt: "Hooks flow initiation and processing. Plugins for logging (slf4j) and metrics (micrometer)."
     url: "/docs/interception/"
     btn_class: "btn--primary"
     btn_label: "Learn more"
@@ -52,33 +52,34 @@ feature_row:
 {% include feature_row %}
 
 
-### Message-based interservice communication is superior to HTTP
-
-Multi-service architectures developed using message-oriented asynchronous communication have a number of advantages over
-systems developed using blocking HTTP. They naturally provide high availability, scalability, fault tolerance, great
-monitoring, simple error handling and debugging. Messages are processed asynchronously and can be prioritized, allowing
-for more efficient and flexible use of resources.
-
-<figure class="align-center" style="max-width: 400px">
+<figure class="align-left" style="max-width: 450px">
   <img src="assets/images/StandardExampleMatsFlow-halfsize-pagescaled.svg" alt="Standard Example Mats Flow">
   <figcaption>Illustrates a set of Mats Endpoints including a Terminator, as well as the initiator setting off a
   Mats Flow. Code <a href="https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/stdexampleflow/Test_StandardExampleMatsFlow.java">here</a>.</figcaption>
 </figure>
 
+### Message-based Interservice Communication is Great!
 
-### Despite many advantages, message-oriented architectures are often shunned
+Interservice communication using messages has many advantages over traditional HTTP-based systems. Messaging naturally
+provides high availability, scalability, fault tolerance, great monitoring, simple error handling, and efficient and
+flexible resource management.
+{: style="text-align: justify;"}
 
-Implementing a message-oriented architecture can be challenging because it requires fully embracing asynchronous,
-multi-staged distributed processing and maintaining state throughout the message flows. This can make it difficult to
-implement and modify, and make the overall structure of the system hard to grasp.
+### Message-based Architectures Can be Complex
 
-Protocols like HTTP gives a synchronous and blocking code style that is simple to follow and reason about, and is a main
-reason why developers and architects choose these over messaging.
+Despite these benefits, many developers and architects shy away from message-oriented architectures due to the
+challenges of implementing and maintaining them. It requires a shift to asynchronous, multi-staged distributed
+processing, often spanning multiple codebases, and the result can be difficult to grasp and manage.
+{: style="text-align: justify;"}
 
-### Mats<sup>3</sup> gives you messaging with a call stack!
+In contrast, protocols over HTTP offers a synchronous and blocking code style that is easy to follow and simple to
+reason about, which is why they're often preferred over messaging.
+{: style="text-align: justify;"}
 
-Mats<sup>3</sup> is a library that allow developers to code message-based systems in a similar way to using HTTP calls,
-and thus feels familiar and intuitive. Mats Endpoints can invoke other Mats Endpoints, and are developed using a linear
-and blocking-like code style, while still benefiting from all the advantages of an asynchronous message-oriented
-architecture. You get the best from both worlds, without the cognitive load.
+### Mats<sup>3</sup> Gives You Messaging With a Call Stack!
 
+Mats<sup>3</sup> allows developers to code message-based systems in a way that feels familiar and intuitive, using a
+linear, blocking-like programming style. But at the same time, systems using Mats<sup>3</sup> get to enjoy all the
+advantages of an asynchronous message-oriented architecture. Mats<sup>3</sup> gives you the best of both
+worlds without the cognitive load.
+{: style="text-align: justify;"}
