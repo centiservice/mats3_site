@@ -10,13 +10,16 @@ classes: wide
 
 So, in the [previous chapter](/docs/message-oriented-rpc) we saw how an Endpoint could be constructed. However, an Endpoint
 picks up messages that arrives on its incoming queue. Granted, other endpoints might put messages there, but this is
-turtles all the way down: Someone got to _start_ such a _Mats Flow_?
+turtles all the way down: Someone has got to _start_ these _Mats Flows_.
 
 ## MatsInitiator
 
-There is basically two distinct situations here: Asynchronous/"Batch" initiation, and synchronous/interactive
-invocations. However, both of these employ the concept of initiation, that is, starting a Mats Flow from "the outside"
-of the Mats fabric.
+So we need a way, from the "outside" of the Mats Fabric, to put a message on the incoming queue of a Mats Endpoint. This
+is called initiation, and you need a `MatsInitiator` to produce and send such initiation messages. A `MatsInitiator` is
+gotten from the `MatsFactory`, the typical way is using the method `getDefaultInitiator()`. This is a thread-safe
+entity, and you are not supposed to get an initiator for every new message you send - you get it, and keep it around,
+using it for all your initiation needs, from multiple threads. In a Spring context, you'd stick it in the context and
+inject it where you need it.
 
 ### Send
 
@@ -25,9 +28,9 @@ initiating a Mats Flow. Whether this is dozen-stage endpoint, or a single stage,
 
 ```java
 class Example {
-    public void exampleSend(MatsFactory matsFactory, MessageDto message) {
+    public void exampleSend(MatsInitiator matsInitiator, MessageDto message) {
         // Initiation:
-        matsFactory.getDefaultInitiator().initiateUnchecked((init) -> init
+        matsInitiator.initiateUnchecked((init) -> init
                 .traceId("SomeTraceId_mandatory") // <- Bad TraceId!
                 .from("Example.exampleSend")
                 .to("Some.endpoint")
