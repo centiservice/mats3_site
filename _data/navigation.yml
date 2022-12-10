@@ -28,9 +28,9 @@ docs:
         url: /docs/sync-async-bridge/
       - title: "SpringConfig"
         url: /docs/springconfig/
-      - title: "Dev&Ops happiness"
+      - title: "Dev&Ops happiness - WIP"
         url: /docs/devops-happiness/
-      - title: "Intercept API"
+      - title: "Intercept API - WIP"
         url: /docs/interception/
-      - title: "MatsBrokerMonitor"
+      - title: "MatsBrokerMonitor - WIP"
         url: /docs/matsbrokermonitor/
