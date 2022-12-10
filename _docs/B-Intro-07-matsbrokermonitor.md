@@ -5,5 +5,3 @@ excerpt: "Tool for monitoring the backing message broker, inspecting messages an
 last_modified_at: 2022-12-08T01:00:24
 toc: true
 ---
-
-## MatsBrokerMonitor

@@ -2,6 +2,7 @@
 title: "Message-Oriented RPC"
 permalink: /docs/message-oriented-rpc/
 excerpt: "Explanation of what Mats is"
+created_date: 2022-12-07T23:40:24
 last_modified_at: 2022-12-07T23:40:24
 classes: wide
 ---
@@ -15,6 +16,7 @@ linear way of coding.
 When you use HTTP as your inter-service communications layer in a multi-service architecture, you naturally get a linear
 code style, since HTTP itself is a blocking protocol: You open a TCP connection to a server, send your request, and
 block while waiting for the response. You eventually get the response, at which point your thread continues the process.
+
 If you had some necessary variables present before the request, these are naturally still present after the response has
 come back, so you can calculate your result based on the sum of information. You can then finish of the process, which
 might be to return the response to whoever asked (and thus blocked on you).
@@ -24,11 +26,12 @@ might be to return the response to whoever asked (and thus blocked on you).
 In a messaging-based, asynchronous, stateless architecture, you're in a different situation. A receiver typically picks
 up a message from an incoming queue, performs the necessary actions, and finishes its part of the job - which may
 involve putting the result on a different outgoing queue. The executing thread then typically goes back to picking up a
-new message from its incoming queue. To follow the process, you'll need to find the receiver that listens to the
-previous stage's outgoing queue. This might reside in a different codebase. If you have state outside the request that
-needs to be present for downstream processing, this either needs to be put on some shared storage, or sent along with
-the messages for the downstream stages. The distribution of code and logic complicates reasoning, system comprehension,
-and reusability.
+new message from its incoming queue.
+
+To follow the process, you'll need to find the receiver that listens to the previous stage's outgoing queue. This might
+reside in a different codebase. If you have state outside the request that needs to be present for downstream
+processing, this either needs to be put on some shared storage, or sent along with the messages for the downstream
+stages. The distribution of code and logic complicates reasoning, system comprehension, and reusability.
 
 ## ISC using Mats<sup>3</sup>
 
@@ -99,3 +102,5 @@ This is what Mats<sup>3</sup> enables.
 Mats<sup>3</sup> stands for _Message-oriented Asynchronous, Transactional, Staged, Stateless Services!_  
 Mats<sup>3</sup> is _Messaging with a call stack!_  
 Mats<sup>3</sup> is _Message-Oriented Asynchronous RPC!_
+
+So, how to start Mats Flows? Go to the [next chapter](/docs/mats-flow-initiation)!
