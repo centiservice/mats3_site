@@ -116,7 +116,8 @@ Reply from the invoked Endpoint with the `replyTo(..)`, and what state object th
 invoked with. It also uses the `request(..)` method, supplying the message which the Endpoint should get.
 
 > Do not be misled by the test semantics employed here, using a synchronous coupling between the Terminator and
-> the @Test-method. Such a coupling is not a normal way to use Mats, and would in a multi-node setup simply not work.
+> the @Test-method. Such a coupling is not a normal way to use Mats, and would in a multi-node setup simply not work, 
+> as the reply could arrive on a different node.
 
 It is important to understand that there will not be a connection between the initiation-point and the terminator,
 except for the state object. So, if you fire off a request in a HTTP-endpoint, the final Reply will happen on a thread
