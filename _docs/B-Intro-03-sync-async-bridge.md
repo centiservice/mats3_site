@@ -2,9 +2,9 @@
 title: "Sync-Async bridge"
 permalink: /docs/sync-async-bridge/
 excerpt: "MatsFuturizer provides a tool for invoking a Mats Endpoint from a synchronous context"
-classes: wide
 created_date: 2022-12-07T23:41:35
-last_modified_at: 2022-12-07T23:41:35
+last_modified_at: 2022-12-10T12:46:58
+classes: wide
 ---
 
 So, you're in a synchronous setting where you need to reply with something which a Mats Endpoint can provide. For
