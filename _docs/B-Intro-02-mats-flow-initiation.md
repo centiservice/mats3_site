@@ -24,21 +24,17 @@ inject it where you need it.
 ### Send
 
 The following is a "fire and forget"-style `send(..)` initiation, which just sends a message to a Mats Endpoint, thereby
-initiating a Mats Flow. Whether this is dozen-stage endpoint, or a single stage, is of no concern to the initiator.
+initiating a Mats Flow. Whether this is dozen-stage endpoint, or a single stage Terminator, is of no concern to the
+initiator.
 
 ```java
-class Example {
-    public void exampleSend(MatsInitiator matsInitiator, MessageDto message) {
-        // Initiation:
-        matsInitiator.initiateUnchecked((init) -> init
-                .traceId("SomeTraceId_mandatory") // <- Bad TraceId!
-                .from("Example.exampleSend")
-                .to("Some.endpoint")
-                .send(message));
-    }
-}
+matsInitiator.initiateUnchecked((init) -> init
+        .traceId("SomeTraceId_mandatory")
+        .from("Example.exampleSend") // "initiatorId"
+        .to("Some.endpoint")
+        .send(message));
 ```
-_Example code for this is [here](https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/basics/Test_SimplestSendReceive.java)._
+_Example of a fire-and-forget test [here](https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/basics/Test_SimplestSendReceive.java)._
 
 So, to initiate a Mats Flow, you need to get hold of a `MatsInitiator`, and must specify:
 
@@ -120,13 +116,13 @@ invoked with. It also uses the `request(..)` method, supplying the message which
 
 > Do not be misled by the test semantics employed here, using a synchronous coupling between the Terminator and
 > the @Test-method. Such a coupling is not a normal way to use Mats, and would in a multi-node setup simply not work, 
-> as the reply could arrive on a different node.
+> as the reply could arrive on a different node. If you need the Reply "in your hand", go to the next chapter.
 
-It is important to understand that there will not be a connection between the initiation-point and the terminator,
+It is important to understand that there will not be a connection between the initiation-point and the Terminator,
 except for the state object. So, if you fire off a request in a HTTP-endpoint, the final Reply will happen on a thread
 of the Terminator-endpoint, without any connection back to your initiatiation. Crucially, the Reply might even come on a
 different service instance (node/replica) than you initiated the Mats Flow from! This is all well and good in the "new
-shipping of widgets arrived" scenario, where you in the terminator want to set the order status in the database to
+shipping of widgets arrived" scenario, where you in the Terminator want to set the order status in the database to
 "delivered". But it will be a bit problematic when wanting to interactively communicate with the Mats fabric, e.g. from
 a web user interface.
 

@@ -26,42 +26,22 @@ The solution is twofold:
    you set as the state for the targeted Terminator, and when the Terminator receives a reply for a specific
    correlation-id, it wakes up the corresponding waiting thread, providing the result.
 
-It would be tedious to code up all this each time you need it, taking into account timeouts, collection garbage from
+It would be tedious to code up all this each time you need it, taking timeouts into account, collection garbage from
 never-returning replies (flows that have DLQed), and a few other tidbits, so there's a tool for it: The `MatsFuturizer`.
 
 It's pretty simple to use: You provide the parameters for an initiation, and then get a `Future` in return. This Future
 will be completed once the invoked Mats Endpoint replies.
 
-Here's an example:
+Here's a futurization:
 
 ```java
-public class Test_MatsFuturizer_Basics {
-    @ClassRule
-    public static final Rule_Mats MATS = Rule_Mats.create();
+// Futurization!
+CompletableFuture<Reply<TestReplyDto>> future = futurizer.futurizeNonessential(
+       "traceId", "initiatorId", "Target.endpoint", TestReplyDto.class,
+        new TestRequestDto(100, "A hundred widgets"));
 
-    @BeforeClass
-    public static void setupEndpoint() {
-        MATS.getMatsFactory().single("Test.endpoint", TestReply.class, TestRequest.class,
-                (context, msg) -> new TestReply(msg.number * 2, msg.string + ":FromService"));
-    }
-
-    @Test
-    public void futurizeTest() {
-        // Get the futurizer - the Rule_Mats already have one created for us:
-        MatsFuturizer futurizer = MATS.getMatsFuturizer();
-
-        TestRequestDto request = new TestRequestDto(42, "TheAnswer");
-
-        // Futurization!
-        CompletableFuture<Reply<TestReplyDto>> future = futurizer.futurizeNonessential(
-                "traceId", "initiatorId", "Test.endpoint", TestReplyDto.class, dto);
-
-        // Immediately wait for result:
-        Reply<TestReplyDto> result = future.get(30, TimeUnit.SECONDS);
-       
-        Assert.assertEquals(new TestReplyDto(dto.number * 2, dto.string + ":FromService"), result.reply);
-    }
-}
+// Immediately wait for result:
+Reply<TestReplyDto> result = future.get(30, TimeUnit.SECONDS);
 ```
 _Unit test [here](https://github.com/centiservice/mats3/blob/main/mats-util/src/test/java/io/mats3/util/futurizer/Test_MatsFuturizer_Basics.java)._
 

@@ -78,7 +78,7 @@ class ShippingEndpointClass {
     @Stage(0)
     void initialStage(ShippingCostRequest msg) {
         // Check if this is one of our special customers
-        if (shippingService.isSpecialCustomer(request.customerId)) {
+        if (_shippingService.isSpecialCustomer(request.customerId)) {
             // Yes, so he always gets free shipping - reply early.
             _context.reply(ShippingCostReply.freeShipping());
             return;
@@ -96,8 +96,8 @@ class ShippingEndpointClass {
     ShippingCostReply calculate(OrderTotalValueReply orderTotalValueReply) {
         // Based on OrderService's response, we'll give rebate or not.
         return orderTotalValueReply.getValue() > 1000
-                ? shippingService.rebated(_orderLines)
-                : shippingService.standard(_orderLines);
+                ? _shippingService.rebated(_orderLines)
+                : _shippingService.standard(_orderLines);
     }
 }
 ```
@@ -105,9 +105,10 @@ class ShippingEndpointClass {
 So, when defining a multi-stage using annotations, you make the stages as separate methods, annotated with `@Stage` and
 an ordinal.
 
-Notice how it uses the class itself for state, while still being able to have Spring Beans injected. This variant
-also has the ProcessContext injected, but that can also be passed in with the arguments for the stage methods.
-Depending on your acceptance of "magic", this can be a bit head-twisting, but in actual usage it feels pretty natural.
+Notice how it uses the class itself for state, while still being able to have Spring Beans injected. This variant also
+has the ProcessContext injected, but that can also be passed in with the arguments for the stage methods, simplifying
+testing. Depending on your acceptance of "magic", this can be a bit head-twisting, but in actual usage it feels pretty
+natural.
 
 It is explained more thoroughly
 in [Endpoints and Initiations](https://github.com/centiservice/mats3/blob/main/docs/developing/EndpointsAndInitiations.md),

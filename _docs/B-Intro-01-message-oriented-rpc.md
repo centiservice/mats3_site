@@ -38,9 +38,9 @@ stages. The distribution of code and logic complicates reasoning, system compreh
 But, what if you in an Endpoint could simply invoke a `request(..)`-method, and have the corresponding
 _Reply_ message show up in a code block right below? And where any state present in the first code block, still is
 present in the second code block? And you didn't have to think about JMS Consumers, Producers, Messages or other
-intricacies of the messaging API? All while these codeblocks are independent stateless consumers of message from
-independent message queues, where it doesn't matter if the second code block ends up executing on a different node than
-the first?
+intricacies of the messaging API? All while these codeblocks are independent stateless and transactional consumers of
+message from independent message queues, where it doesn't matter if the second code block ends up executing on a
+different node than the first?
 
 That is, something like
 this (<a href="https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/basics/Test_MultiLevelMultiStage.java">code</a>):
