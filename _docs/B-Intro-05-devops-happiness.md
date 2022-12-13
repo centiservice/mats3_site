@@ -79,6 +79,20 @@ There's a document about traceIds and initatorIds
 There are two standard plugins to Mats, implemented over the Interceptor API, which provide a very rich logging
 experience (using SLF4J), and metrics for e.g. Prometheus (using Micrometer). See [own article](/docs/interception/).
 
+### MatsTrace
+
+The JMS implementation of Mats employs the MatsTrace as its "wire protocol". This has additional debugging features
+whereby it effectively keeps a trace of all stages of all endpoints that it has passed through. This is extremely
+nice when the message ends up on a Dead Letter Queue of some stage: You immediately, without even accessing any logs,
+can see tons of meta info about the initiation and the current call, and also which endpoints and stages it has
+so far passed through.
+
+The level of "state keeping" is configurable, between MINIMAL (just metadata + current call), COMPACT (metadata + "log"
+of each stage processing), and FULL (metadata + every request, response and state change while going through every
+stage). This must be set at initiation, and have a default on the MatsFactory. The default of that is COMPACT. The
+reason that FULL is not default is because that can become pretty heavy if the Mats Flows are long, and/or if you use
+large state objects and/or request and responses; All versions of state, and all requests and responses are kept.
+
 ### Embeddable HTML MatsFactory introspection - `MatsLocalInspect`
 
 If you have a "developer monitor" for each of your services - which I suggest that you do! - then you can employ a nice
