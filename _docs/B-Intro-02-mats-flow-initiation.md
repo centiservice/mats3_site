@@ -2,8 +2,8 @@
 title: "Initiation"
 permalink: /docs/mats-flow-initiation/
 excerpt: "How to initiate Mats Flows"
-created_date: 2022-12-10T00:01:36
-last_modified_at: 2022-12-10T00:01:36
+created_at: 2022-12-10T00:01:36
+last_modified_at: 2022-12-13T20:12:15
 classes: wide
 ---
 
@@ -28,7 +28,7 @@ initiating a Mats Flow. Whether this is dozen-stage endpoint, or a single stage 
 initiator.
 
 ```java
-matsInitiator.initiateUnchecked((init) -> init
+matsInitiator.initiate((init) -> init
         .traceId("SomeTraceId_mandatory")
         .from("Example.exampleSend") // "initiatorId"
         .to("Some.endpoint")
@@ -46,10 +46,13 @@ So, to initiate a Mats Flow, you need to get hold of a `MatsInitiator`, and must
 Specifying good TraceIds and InitiatorIds will help immensely when debugging, and wrt. metrics - there's a document
 about this [here](https://github.com/centiservice/mats3/blob/main/docs/developing/TraceIdsAndInitiatorIds.md).
 
-This Mats Flow will terminate when no new Flow messages are produced - or if the endpoint targeted by the fire-and-forget
-send-invocation performs a Reply, as there is no one to Reply to. The latter is analogous to invoking a Java method
-which return something, but where you do not take its return. For example `map.put(key, value)` returns the previous
-value at the key position, but often you do not care about this.
+The InitiateLambda is executed within a transaction. While the typical initiation is a single Mats Flow
+(one outgoing message), you may initiate as many as you want.
+
+The resulting Mats Flow will terminate when no new Flow messages are produced - or if the endpoint targeted by the
+fire-and-forget send-invocation performs a Reply, as there is no one to Reply to. The latter is analogous to invoking a
+Java method which return something, but where you do not take its return. For example `map.put(key, value)` returns the
+previous value at the key position, but often you do not care about this.
 
 ### Request
 
@@ -89,14 +92,13 @@ public class Test_SimplestEndpointRequest {
 
     @Test
     public void doTest() {
-        // Send request to "Service", specifying reply to "Terminator".
         ServiceRequest dto = new ServiceRequest(42, "TheAnswer");
         StateClass sto = new StateClass(420, 420.024);
 
-        // Initiation:
+        // Initiation: Send request to "Test.endpoint", specifying reply to "Test.terminator".
         MATS.getMatsInitiator().initiateUnchecked((init) -> init
-                .traceId("SomeTraceId_mandatory") // <- Bad TraceId!
-                .from("Test.simplestEndpointRequest")
+                .traceId("SomeTraceId_mandatory")
+                .from("Example.exampleRequest")
                 .to("Test.endpoint")
                 .replyTo("Test.terminator", sto)
                 .request(dto));
@@ -110,13 +112,15 @@ public class Test_SimplestEndpointRequest {
 ```
 _Code available [here](https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/basics/Test_SimplestEndpointRequest.java)._
 
-Compared to the "fire-and-forget" `send(..)` initiation above, this initiation specifies which Endpoint should get the
-Reply from the invoked Endpoint with the `replyTo(..)`, and what state object that Reply-receiving Endpoint should be
-invoked with. It also uses the `request(..)` method, supplying the message which the Endpoint should get.
+Compared to the "fire-and-forget" `send(..)` initiation above, this initiation specifies which Terminator should get the
+Reply from the invoked Endpoint with the `replyTo(..)` method, which also specifies which state object the Terminator
+should receive. A Terminator is an Endpoint which terminates the Mats Flow by not producing any more flow messages. The
+initiation then uses the `request(..)` method, supplying the message which the Endpoint should get.
 
 > Do not be misled by the test semantics employed here, using a synchronous coupling between the Terminator and
-> the @Test-method. Such a coupling is not a normal way to use Mats, and would in a multi-node setup simply not work, 
-> as the reply could arrive on a different node. If you need the Reply "in your hand", go to the next chapter.
+> the @Test-method, by means of a `MatsTestLatch`. Such a coupling is not a normal way to use Mats, and would in a
+> multi-node setup simply not work, as the reply could arrive on a different node. If you need the Reply from the
+> invoked Endpoint "in your hand", go to the next chapter.
 
 It is important to understand that there will not be a connection between the initiation-point and the Terminator,
 except for the state object. So, if you fire off a request in a HTTP-endpoint, the final Reply will happen on a thread

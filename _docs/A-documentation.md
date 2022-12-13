@@ -2,7 +2,8 @@
 title: "Documentation"
 permalink: /docs/
 excerpt: "Overview over Mats documentation"
-last_modified_at: 2022-12-07T23:45:44
+created_at: 2022-12-07T23:45:44
+last_modified_at: 2022-12-13T23:14:35
 toc: true
 ---
 
@@ -36,7 +37,7 @@ and tests of the testing tools for
 [JUnit](https://github.com/centiservice/mats3/tree/main/mats-test-junit/src/test/java/io/mats3/test/junit) /
 [Jupiter](https://github.com/centiservice/mats3/tree/main/mats-test-jupiter/src/test/java/io/mats3/test/jupiter) /
 [Spring](https://github.com/centiservice/mats3/tree/main/mats-spring-test/src/test/java/io/mats3/spring/test).
-There's also a rudimentary "dev area" for with a TestJettyServer for the Metrics Interceptor
+There's also a rudimentary "dev area" with a _TestJettyServer_ for the Metrics Interceptor
 [MatsMetrics](https://github.com/centiservice/mats3/tree/main/mats-intercept-micrometer/src/test/java/io/mats3/test/metrics/MatsMetrics_TestJettyServer.java),
 and same for Local Introspector [LocalHtmlInspect](https://github.com/centiservice/mats3/tree/main/mats-localinspect/src/test/java/io/mats3/localinspect/LocalHtmlInspect_TestJettyServer.java),
 both of which you may start from your IDE.

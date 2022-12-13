@@ -2,16 +2,16 @@
 title: "SpringConfig"
 permalink: /docs/springconfig/
 excerpt: "Mats integrates with Spring, and lets you define Endpoints using annotations"
-created_date: 2022-12-10T00:02:00
-last_modified_at: 2022-12-10T12:15:17
+created_at: 2022-12-10T00:02:00
+last_modified_at: 2022-12-13T00:18:00
 classes: wide
 ---
-
-Mats is pure Java.
 
 > The Mats API itself has zero dependencies. The JMS Mats implementation depends on the Mats API, JMS API for messaging,
 > and MatsTrace for wire protocol. In addition, you need an implementation of JMS (ActiveMQ or Artemis client), and an
 > implementation of MatsTrace, the default using Jackson JSON.
+
+Mats is pure Java.
 
 However, if your app is Spring oriented, you might want to define Mats Endpoints using annotations, much like you use
 `@RequestMapping` in Spring to define HTTP endpoints.

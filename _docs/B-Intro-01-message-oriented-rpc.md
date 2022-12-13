@@ -2,8 +2,8 @@
 title: "Message-Oriented RPC"
 permalink: /docs/message-oriented-rpc/
 excerpt: "Explanation of what Mats is"
-created_date: 2022-12-07T23:40:24
-last_modified_at: 2022-12-07T23:40:24
+created_at: 2022-12-07T23:40:24
+last_modified_at: 2022-12-13T23:14:05
 classes: wide
 ---
 
@@ -102,5 +102,9 @@ This is what Mats<sup>3</sup> enables.
 Mats<sup>3</sup> stands for _Message-oriented Asynchronous, Transactional, Staged, Stateless Services!_  
 Mats<sup>3</sup> is _Messaging with a call stack!_  
 Mats<sup>3</sup> is _Message-Oriented Asynchronous RPC!_
+
+_There's a bit more about the rationale for Mats, and the benefits of messaging-based architectures
+[here](https://github.com/centiservice/mats3/blob/main/docs/RationaleForMats.md), and some further
+musings on what Mats is [here](https://github.com/centiservice/mats3/blob/main/docs/WhatIsMats.md)_ 
 
 So, how to start Mats Flows? Go to the [next chapter](/docs/mats-flow-initiation)!

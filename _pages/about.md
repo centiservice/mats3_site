@@ -53,15 +53,15 @@ REST [wrong all the time?](https://htmx.org/essays/how-did-rest-come-to-mean-the
 
 However, everything was still synchronous and blocking. Which I just could not get my head around.
 
-What I perceive as the primary problem is that state for in-flight processes is residing in memory, possibly just on the
-stack of some blocking thread. To handle errors, where some dependent service goes down midway, you also need to
-implement retries, getting another type of problem where you don't really know whether the operation was executed or
-not. If a service is hung, and needs to be booted, you might kill off hundreds of midway processes. And if things starts
-to lock up, you may lose the overview, and get cascading failures percolating through your entire system. Where you
-eventually just have to reboot multiple servers to get things cranking again, and thus immediately terminate even more
-in-flight processes. And now you would have to rummage through multiple databases and heaps of logs to find where each
-of these stranded, and need extreme insight into the system to get those processes going again, or reset them and get
-them to start over.
+What I perceive as the primary problem is _state_: The state for in-flight processes is residing in memory, possibly
+just on the stack of some blocking thread. To handle errors, where some dependent service goes down midway, you also
+need to implement retries, getting another type of problem where you don't really know whether the operation was
+executed or not. If a service is hung, and needs to be booted, you might kill off hundreds of midway processes. And if
+things starts to lock up, you may lose the overview, and get cascading failures percolating through your entire system.
+Where you eventually just have to reboot multiple servers to get things cranking again, and thus immediately terminate
+even more in-flight processes. And now you would have to rummage through multiple databases and heaps of logs to find
+where each of these stranded, and need extreme insight into the system to get those processes going again, or reset them
+and get them to start over.
 
 And then I got to experience this first hand. Me and some colleagues were working on NSB.no, the website of the
 Norwegian state's railroad. This is a fairly heavily used site. Our part used four quite beefy frontend servers, with
