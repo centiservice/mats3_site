@@ -30,7 +30,7 @@ docs:
         url: /docs/springconfig/
       - title: "Dev&Ops happiness"
         url: /docs/devops-happiness/
-      - title: "Intercept API - WIP"
+      - title: "Intercept API"
         url: /docs/interception/
-      - title: "MatsBrokerMonitor - WIP"
+      - title: "MatsBrokerMonitor"
         url: /docs/matsbrokermonitor/

@@ -7,14 +7,15 @@ last_modified_at: 2022-12-10T12:46:18
 classes: wide
 ---
 
-The Mats Intercept API allows tooling to intercept all initiation and stage
-processing, and which have a ton of metadata about such processing, in particular timings.
+The Mats Intercept API allows tooling to intercept all initiation and stage processing, and have a ton of metadata about
+such processing, in particular timings.
 
 The JMS Mats implementation implements this API, in addition to the Mats API itself.
 
-Logging (over SLF4J) and Metrics gathering (using Micrometer) is implemented as plugins to Mats using this API.
+Logging (over SLF4J) and Metrics gathering (using Micrometer) is implemented as plugins to Mats using this API. The
+`LocalHtmlInspectForMatsFactory` also has an interceptor that gathers local statistics.
 
-## Intercept API
+## Features
 
 You get detailed information about each stage's processing, and how much time went into receiving and destructuring
 the message, decompressing it (if compressed), performing the transactional demarcation, invoking the "user lambda", 
@@ -24,24 +25,16 @@ You may also add and remove messages, and even intercept the entire user lambda 
 
 ## Logging
 
-Good JavaDoc [here](http://localhost:4000/javadoc/mats3/0.19/modern/io/mats3/intercept/logging/MatsMetricsLoggingInterceptor.html).
+Initiations, Message reception, Process complete, and any sent messages, are logged. Each of the log lines have a rich
+set of MDC properties set, which, if you've configured your logging system sanely, will end up as fields. These props
+are metrics and states, which can both be used to query on, but also used to make statistics and graphs.
 
-### Initiation
-
-Outputs one logline per completed initiation, and per sent message. If there is only one outgoing message, the "
-complete" and "message sent" log lines are combined.
-
-### Stage Processing
-
-Outputs one logline for receiving a message, and then one when the message is finished processing, as well as one
-logline per sent message. If there is only one outgoing message, the "complete" and "message sent" log lines are
-combined.
-
+See JavaDoc [here](/javadoc/mats3/0.19/modern/io/mats3/intercept/logging/MatsMetricsLoggingInterceptor.html)
 
 ## Metrics
 
-Some JavaDoc [here](http://localhost:4000/javadoc/mats3/0.19/modern/io/mats3/intercept/micrometer/MatsMicrometerInterceptor.html)
+Several key metrics are kept using Micrometer. You may expose these as e.g. Prometheus scrape or any other of the dozens
+metric collector/exposition solutions Micrometer support, it being "SLF4J for Metrics". From your metrics system, you
+may then graph out e.g. stage timings, message broker send and commit times etc.
 
-Metrics are gathered for a subset of the available datapoints.
-
-You may for example expose these using a Prometheus exposition plugin for Micrometer. 
+See JavaDoc [here](/javadoc/mats3/0.19/modern/io/mats3/intercept/micrometer/MatsMicrometerInterceptor.html)

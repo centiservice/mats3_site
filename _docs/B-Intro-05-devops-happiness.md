@@ -7,21 +7,22 @@ last_modified_at: 2022-12-13T23:17:00
 classes: wide
 ---
 
-Mats aims to please both developers, and folks that need to handle the system when it runs in production - which may
-or may not be the same developers, or dedicated operations personnel.
+Mats aims to please both the developers making a distributed system, and the folks that need to handle the system when
+it runs in production - which may or may not be the same developers, or dedicated operations personnel.
 
 Wrt. development, Mats has multiple features for making it a pleasure to communicate between services in a messaging
 fashion, providing a simple API.
 
-Wrt. operations, the features mainly revolves about robustness, traceability, metrics, introspection, and handling of dead letters.
+Wrt. operations, the features mainly revolves about robustness, traceability, metrics, introspection, and handling of
+dead letters.
 
 ### Transactional processing
 
-Initation, and each stage, is executed within a transaction, spanning both the message broker and DB. This means that
-for a stage, the reception of a message, processing of the message including db changes, and sending of an outgoing
-message, are all done, or none of it is done. This means that the system is extremely robust: Once you've managed to get
-an initation onto the Mats Fabric, it will go through _or_ end up on a dead letter queue. In no way it is possible to
-lose the Mats Flow without trace.
+Initiations, and each stage processing, is executed within a transaction, spanning both the message broker and DB. This
+means that for a stage, the reception of a message, processing of the message including db changes, and sending of an
+outgoing message, are all done, or none of it is done. This means that the system is extremely robust: Once you've
+managed to initiate a Mats Flow onto the Mats Fabric, i.e. sent the first message, it will go through and finish on the
+Terminator, _or_ end up on a dead letter queue. In no way it is possible to lose the Mats Flow without trace.
 
 Rebooting machines, deploying new versions, scaling up and down, and crashes, are handled without any issue.
 
@@ -50,23 +51,23 @@ There's more about the transactionality of Mats [here](https://github.com/centis
   byte array which you need to store, typically in a database. The Mats Flow is now "frozen". When you eventually get
   the response from the outside service, you can unstash the Mats Flow and provide the result. This can also be used to
   park a flow while a human is evaluating some details, e.g. identification - but it is not meant for long term storage.
-* On the stage context, you can add metric measurements and timings, e.g. how long a db query takes. These are available
-  for the Interceptor API, and can be output in logging and metrics - see next chapter.
+* Add own metrics: On the stage context, you can add metric measurements and timings, e.g. how long a db query takes.
+  These are available for the Interceptor API, and can be output in logging and metrics - see next chapter.
 * `MatsFuturizer`-utility for sync-async bridge - see [own article](/docs/sync-async-bridge/)
 
 ### TraceId - following a Mats Flow from start to finish
 
 When initiating a Mats Flow, you are required to provide a 'traceId'. This identifier follows all the stage processing
 through the Mats fabric, and - if you use a centralized logging system (well, of course you do) - you can use this id to
-follow the flow from message reception, processing, and message send, for each stage. This is put on the MDC of SLF4J,
-so that any output log lines within a processing will also be tagged.
+follow the flow from message reception, processing, and message send, for each stage. The traceId is put on the MDC of
+SLF4J, so that any output log lines within a processing will also be tagged.
 
 In addition, it is highly suggested to use meaningful and information-rich traceIds, so that you can read out quite a
 bit of information from the id alone.
 
-Such a logic is obviously mandatory for every multi-service solution, but you'll often have to jump through hoops and
-code quite a bit to get this to follow through. With Mats, you get this for free - and if you give some thought to how
-you cook up that id, you gain even more.
+Such a tracing solution is obviously mandatory for every multi-service solution, but you'll often have to jump through
+hoops and code quite a bit to get this to follow through. With Mats, you get this for free - and if you give some
+thought to how you cook up that id, you gain even more.
 
 There's also a concept of `initiatorId`, as well as the `appName` and `appVersion`. All these follow the Mats flow from
 start to finish, and give you many angles to understand both individual flows, and also aggregates.
@@ -76,27 +77,33 @@ There's a document about traceIds and initatorIds
 
 ### Logging and Metrics
 
-There are two standard plugins to Mats, implemented over the Interceptor API, which provide a very rich logging
-experience (using SLF4J), and metrics for e.g. Prometheus (using Micrometer). See [own article](/docs/interception/).
+There are two standard plugins to Mats, implemented over the Intercept API, which provide a very rich logging
+experience (using SLF4J), and metrics for e.g. Prometheus (using Micrometer). See [next chapter](/docs/interception/).
 
 ### MatsTrace
 
-The JMS implementation of Mats employs the MatsTrace as its "wire protocol". This has additional debugging features
-whereby it effectively keeps a trace of all stages of all endpoints that it has passed through. This is extremely
-nice when the message ends up on a Dead Letter Queue of some stage: You immediately, without even accessing any logs,
-can see tons of meta info about the initiation and the current call, and also which endpoints and stages it has
-so far passed through.
+The JMS implementation of Mats employs MatsTrace as its wire protocol. This has additional debugging features whereby it
+effectively keeps a trace of all stages of all endpoints that it has passed through. This is extremely nice when the
+message ends up on a Dead Letter Queue of some stage: You immediately, without even accessing any logs, can see tons of
+meta info about the initiation and the current call, and also which endpoints and stages it has so far passed through.
 
-The level of "state keeping" is configurable, between MINIMAL (just metadata + current call), COMPACT (metadata + "log"
-of each stage processing), and FULL (metadata + every request, response and state change while going through every
-stage). This must be set at initiation, and have a default on the MatsFactory. The default of that is COMPACT. The
-reason that FULL is not default is because that can become pretty heavy if the Mats Flows are long, and/or if you use
-large state objects and/or request and responses; All versions of state, and all requests and responses are kept.
+The level of "trace keeping" is configurable, between MINIMAL (just metadata + current call), COMPACT (metadata + log of
+each stage processing), and FULL (metadata + every request, response and state change while going through every stage).
+This must be set at initiation, and have a default on the MatsFactory. The default of that is COMPACT. The reason that
+FULL is not default is because that can become pretty heavy if the Mats Flows are long, and/or if you use large state
+objects and/or large requests and responses; All versions of state, and all requests and responses, are then kept in the
+MatsTrace envelope.
+
+A suggestion is to use `KeepTrace.FULL` while developing and stabilizing new Mats Endpoints and processes, and when they
+have proven themselves to be close to error free over some time, reduce the level to `KeepTrace.COMPACT`. The latter is
+a happy compromise between small and fast messages for the ~100% where things go OK, and still nice introspection
+when some corner-case message inevitably ends up on a DLQ anyway. `KeepTrace.MINIMAL` should not really be needed - you
+are probably using too high granularity if shaving off those few extra bytes makes a difference.
 
 ### Embeddable HTML MatsFactory introspection - `MatsLocalInspect`
 
 If you have a "developer monitor" for each of your services - which I suggest that you do! - then you can employ a nice
-feature of Mats: You can make a page in the dev monitor which shows the MatsLocalInspect embeddable MatsFactory
+feature of Mats: You can make a page in the dev monitor which shows the MatsLocalInspect HTML-embeddable MatsFactory
 introspection pane.
 
 It shows all details of the MatsFactory, and all MatsInitiators, all MatsEndpoints and all Stages - and if you install
@@ -106,3 +113,4 @@ the Interceptor, you even get rudimentary statistics about number of calls and t
 
 see [own article](/docs/matsbrokermonitor/)
 
+Okay, so great tooling - but what is the Intercept API? Onwards to [next chapter](/docs/interception/)!
