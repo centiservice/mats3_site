@@ -32,7 +32,7 @@ matsInitiator.initiate((init) -> init
         .traceId("SomeTraceId_mandatory")
         .from("Example.exampleSend") // "initiatorId"
         .to("Some.endpoint")
-        .send(message));
+        .send(new HelloDto("Hello, World!")));
 ```
 _Example of a fire-and-forget test [here](https://github.com/centiservice/mats3/blob/main/mats-api-test/src/test/java/io/mats3/api_test/basics/Test_SimplestSendReceive.java)._
 
@@ -58,7 +58,7 @@ previous value at the key position, but often you do not care about this.
 
 If you in the initiation want a reply from the Mats Flow, you employ a `request(..)` initiation, where you specify a
 `replyTo` endpoint. Such a reply-target Endpoint is called a Terminator, as it will receive the final Reply, and then
-eventually must terminate the Mats Flow since there is no one to Reply to. It is typically a single-stage endpoint, but
+eventually must terminate the Mats Flow since there is no more to Reply to. It is typically a single-stage endpoint, but
 this is not a requirement. You can supply a state object in the initiation, which will be present on the Terminator.
 
 Illustrating a request with a unit test: The test sets up a single-stage Endpoint which we will request. It also sets up

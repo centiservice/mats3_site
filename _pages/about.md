@@ -5,9 +5,7 @@ classes: wide
 ---
 
 Mats<sup>3</sup> is a library that attempts to make message-oriented architectures mimic a synchronous, blocking way of
-coding.
-
-Read more [here](/docs/message-oriented-rpc/)
+coding. Read more [here](/docs/message-oriented-rpc/)
 
 # Background
 

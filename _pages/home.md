@@ -7,7 +7,7 @@ header:
   overlay_color: "#F7420A"
   # overlay_image: /assets/images/mm-home-page-feature.jpg
   actions:
-    - label: "<i class='fab fa-fw fa-github'></i> Mats3"
+    - label: "<i class='fab fa-fw fa-github'></i> GitHub"
       url: "https://github.com/centiservice/mats3"
     - label: "Maven Central"
       url: "https://mvnrepository.com/artifact/io.mats3"

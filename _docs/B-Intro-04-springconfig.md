@@ -8,8 +8,8 @@ classes: wide
 ---
 
 > The Mats API itself has zero dependencies. The JMS Mats implementation depends on the Mats API, JMS API for messaging,
-> and MatsTrace for wire protocol. In addition, you need an implementation of JMS (ActiveMQ or Artemis client), and an
-> implementation of MatsTrace, the default using Jackson JSON.
+> SLF4J for logging, and MatsTrace for wire protocol. In addition, you need an implementation of JMS (ActiveMQ or
+> Artemis client), and an implementation of MatsTrace, the default using Jackson JSON.
 
 Mats is pure Java.
 
@@ -29,7 +29,7 @@ Here's an example of `@MatsMapping` to define a single-stage Endpoint:
 
 ```java
 // Note: MatsFactory must reside in Spring context, and some @Configuration-class
-// has the @EnableMats annotation set.
+// must have the @EnableMats annotation added.
 
 @Service
 class MatsEndpoints {
