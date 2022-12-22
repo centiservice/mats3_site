@@ -7,7 +7,6 @@ last_modified_at: 15.12.2022T20:37
 classes: wide
 ---
 
-
 The Mats Intercept API allows tooling to intercept all initiation and stage processing, and have a ton of metadata about
 such processing, in particular timings.
 

@@ -42,7 +42,7 @@ There's more about the transactionality of Mats [here](https://github.com/centis
     in a tail call situation.
 * Initiate new flows within a stage processing. These flows are started within the same transactional demarcation as the
   stage they're running. Can both be used for orchestration, and for sending off a "side flow" for notification to a
-  different system.
+  different system. They automatically inherit the current Flow's traceId, but you can append to it.
 * Use pub/sub messaging, i.e. Topics, by use of `subscriptionTerminator`-type Endpoint, and `publish` instead of `send`.
   You may also target the reply in an initiation to go to a subscriptionTerminator by using `replyToSubscription(...)`.
   You may think of this as a "broadcast"-functionality, compared to the single-fibre Mats Flows.
@@ -82,8 +82,8 @@ There's a document about traceIds and initatorIds
 
 ### Intercept API, Logging and Metrics
 
-There's an additional API implemented by the JMS Mats implementation: The Intercept API. This provides hooks to all
-stages of a Mats flows, from initiation, message sending, message reception and processing.
+There's an additional API implemented by the JMS Mats implementation: The Matgs Intercept API. This provides hooks to
+all stages of a Mats flows, from initiation, message sending, message reception and processing.
 
 There are two standard plugins to Mats, implemented over the Intercept API, which provide a very rich logging
 experience (using SLF4J), and metrics for e.g. Prometheus (using Micrometer).
@@ -92,8 +92,8 @@ For more about interception, logging and metrics, read [own article](/docs/inter
 
 ### MatsTrace
 
-The JMS implementation of Mats employs MatsTrace as its wire protocol. This has additional debugging features whereby it
-effectively keeps a trace of all stages of all endpoints that it has passed through. This is extremely nice when the
+The JMS implementation of Mats employs _MatsTrace_ as its wire protocol. This has additional debugging features whereby
+it effectively keeps a trace of all stages of all endpoints that it has passed through. This is extremely nice when the
 message ends up on a Dead Letter Queue of some stage: You immediately, without even accessing any logs, can see tons of
 meta info about the initiation and the current call, and also which endpoints and stages it has so far passed through.
 
@@ -117,10 +117,14 @@ feature of Mats: You can make a page in the dev monitor which shows the MatsLoca
 introspection pane.
 
 It shows all details of the MatsFactory, and all MatsInitiators, all MatsEndpoints and all Stages - and if you install
-the Interceptor, you even get rudimentary statistics about number of calls and timings for each stage and endpoint.
+its corresponding Interceptor, you even get rudimentary statistics about number of calls and timings for each stage and
+endpoint.
 
 ### MatsBrokerMonitor - for monitoring of the backing message broker
 
-see [own article](/docs/matsbrokermonitor/)
+When using Mats - or really any messaging based infrastructure - you gain a massive advantage by having many of the
+errors in the total system "crop up" on the message broker. However, to catch these errors, you need to monitor it.
+
+See [own article](/docs/matsbrokermonitor/)
 
 Okay, so great tooling - but what is the Intercept API? Onwards to [next chapter](/docs/interception/)!

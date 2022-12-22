@@ -10,9 +10,12 @@ coding. Read more [here](/docs/message-oriented-rpc/)
 # Background
 
 The author has been interested in computer since the Commodore 64 days, and in particular found super computers and
-distributed computing fascinating. When growing up and going professional, I began to understand that some systems
-additionally requires very high uptime. This introduced a new set of challenges, since failures can spuriously occur on
-any level of any stack.
+distributed computing fascinating. In my younger years I repaired computers to earn some extra cash. This made it
+obvious that computers can fail - my money flow actually depended on it! When the computers started being networked, it
+was pretty obvious that multiple computers in a network fail way more than a single home computer can do on its own. As
+the world started relying more and more on computers and IT systems, it became obvious that many systems requires very
+high uptime. This is of course problematic since failures can spuriously occur on any level in any part of the composite
+system, both due to dumb human-created bugs, but also since hardware can just randomly fail.
 
 There have been many attempts at handling this, basically taking two routes: Either make the system never fail, or
 handle failures. When at university, I got to visit Hewlett-Packard and was shown their
@@ -25,8 +28,8 @@ Thus, the better route seemed to make a system that handles failures. Even thoug
 the application developer, it is much more generic, can run on commodity hardware, and can, if coded for, handle any
 level of failure scenario.
 
-This again requires multiple computers, since a failure mode is that one computer burns to the ground. These multiple
-computers needs to communicate to agree on who should do what.
+This again requires multiple computers, since a failure mode is that one computer burns down to the ground. These
+multiple computers needs to communicate to agree on who should do what.
 
 However, when going down into protocols for communication, I basically found that most recommendations, at least most
 practice, was using blocking comms, typically over HTTP.
@@ -37,7 +40,7 @@ HTTP. Then SOA got out of favour due to its complexity. As a tangent, I would ar
 on several levels. The software solutions were clumsy and error prone, and the generated schemas and messages were
 hellish to read. But more importantly, "granularity killed SOA": People forgot about the 8 fallacies of distributed
 computing. In particular, since it was instance oriented, developers were prone to first do `remoteUser.getFirstname()`,
-and then `remoteUser.getLastname()`. The result was pure molasses. And that is just one or two of the fallacies.
+and then `remoteUser.getLastname()`. The result was pure molasses. And that is just due to a few of the fallacies.
 
 Java Enterprise Edition, J2EE, was also cool for a while, where you needed a gazillion interfaces and remote and local
 implementations of .. way too much .. to query a single SQL table for the age of your customer. The number of stranded

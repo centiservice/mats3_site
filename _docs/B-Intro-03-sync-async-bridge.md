@@ -7,13 +7,17 @@ last_modified_at: 2022-12-13T00:18:00
 classes: wide
 ---
 
-So, you're in a synchronous setting where you need to reply with something which a Mats Endpoint can provide. For
+In the [previous chapter](mats-flow-initiation/) we saw how to initiate a Mats Flow. However, if you need the result of
+a Mats Request _in this thread_, you'll run into a problem: An initiated Mats flow will not execute in, and definitely
+not return to, the initiating thread.
+
+Let's say you're in a synchronous setting where you need to reply with something which a Mats Endpoint can provide. For
 example in a Servlet, or a Spring `@RequestMapping`. If you use a `MatsInitiator` and perform a request, the reply
 will come to the Terminator you specified. However, even if that Terminator resides in the same service, there is no
 connection back to the thread you're in. Even worse, in a multi-node setup, where you've fired up a dozen replicas of
-this service, the reply will most probably come to an instance of the Terminator residing on a different replica.
+this service, the reply will most probably come to an instance of the Terminator residing on a different replica/node.
 
-So, how can we employ the Mats fabric to provide information in a synchronous setting?
+How can we employ the Mats fabric to provide information in a synchronous setting?
 
 ## MatsFuturizer
 
@@ -58,5 +62,6 @@ linearity and asynchronicity of a Mats Flow in a very fundamental way. **The Mat
 very outer edges, where you have a synchronous call that needs to bridge into the asynchronous Mats fabric.** There's a
 document going further into this [here](https://github.com/centiservice/mats3/blob/main/docs/developing/MatsComposition.md).
 
-Top notch. But you're in a Spring setting, and using programmatic Java to configure Mats Endpoints feels a bit last
-century. Annotations rocks! [next chapter](/docs/springconfig/)
+Okay, creating Mats endpoints, Flow initiations and async-sync bridge: Nailed. But you're in a Spring setting, and using
+programmatic Java to configure Mats Endpoints feels a bit last century. Annotations
+rocks! [next chapter](/docs/springconfig/)
