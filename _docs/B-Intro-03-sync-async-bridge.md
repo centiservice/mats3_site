@@ -25,7 +25,8 @@ The answer is the `MatsFuturizer`. This is simply a tool on top of the Mats API 
 yourself using Mats only.
 
 The solution is twofold:
-1. Ensure that the reply comes back to _this_ replica/node. Simple: Use a replica/node-specific replyTo Terminator id.
+1. Ensure that the reply comes back to _this_ replica/node. Simple: Use a replica/node-specific replyTo Terminator
+   EndpointId, and thus a replica/node-specific queue or topic.
 2. Block the thread, waiting for the reply. Simple: Make a Map of outstanding requests, mapped on a correlation-id which
    you set as the state for the targeted Terminator, and when the Terminator receives a reply for a specific
    correlation-id, it wakes up the corresponding waiting thread, providing the result.
@@ -43,13 +44,19 @@ Here's a futurization:
 CompletableFuture<Reply<TestReplyDto>> future = futurizer.futurizeNonessential(
        "traceId", "initiatorId", "Target.endpoint", TestReplyDto.class,
         new TestRequestDto(100, "A hundred widgets"));
+```
 
+.. and we may for example synchronously wait for the result:
+
+```java
 // Immediately wait for result:
 Reply<TestReplyDto> result = future.get(10, TimeUnit.SECONDS);
 ```
+.. or we could put the Future into the async handler of a Servlet.
+
 _Unit test [here](https://github.com/centiservice/mats3/blob/main/mats-util/src/test/java/io/mats3/util/futurizer/Test_MatsFuturizer_Basics.java)._
 
-`MatsFuturizer` JavaDoc [here](https://mats3.io/javadoc/mats3/0.19/modern/io/mats3/util/MatsFuturizer.html).
+_JavaDoc of `MatsFuturizer` [here](https://mats3.io/javadoc/mats3/0.19/modern/io/mats3/util/MatsFuturizer.html)._
 
 **Notice!! Please make sure that you never code a Mats Endpoint where a stage executes a MatsFuturization**: This breaks
 the premise and guarantees of Mats pretty hard, in that you now have a Mats Stage waiting synchronously and statefully
