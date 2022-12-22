@@ -117,7 +117,7 @@ public class <span class="typeNameLabel">MatsSpringAnnotationRegistration</span>
 extends java.lang.Object
 implements org.springframework.beans.factory.config.BeanPostProcessor, org.springframework.context.ApplicationContextAware</pre>
 <div class="block">The <code>BeanPostProcessor</code>-class specified by the <a href="../../../io/mats3/spring/EnableMats.html" title="annotation in io.mats3.spring"><code>@EnableMats</code></a> annotation.
- <p />
+ <p/>
  It checks all Spring beans in the current Spring <code>ApplicationContext</code> for whether their classes are annotated
  with <a href="../../../io/mats3/spring/MatsClassMapping.html" title="annotation in io.mats3.spring"><code>@MatsClassMapping</code></a>, or if they have methods annotated with
  <a href="../../../io/mats3/spring/MatsMapping.html" title="annotation in io.mats3.spring"><code>@MatsMapping</code></a> or <a href="../../../io/mats3/spring/MatsEndpointSetup.html" title="annotation in io.mats3.spring"><code>@MatsEndpointSetup</code></a>, and if so configures Mats endpoints
@@ -126,16 +126,16 @@ implements org.springframework.beans.factory.config.BeanPostProcessor, org.sprin
  the endpoints, and then <a href="../../../io/mats3/MatsFactory.html#start--"><code>MatsFactory.start()</code></a> as late as possible in the startup procedure.
  Upon Spring context shutdown, it invokes <a href="../../../io/mats3/MatsFactory.html#stop-int-"><code>MatsFactory.stop(..)</code></a> as early as possible in
  the shutdown procedure.
-
- <h3>This is the startup procedure:</h3>
+ <p/>
+ <h3>Startup procedure:</h3>
  <ol>
  <li>The <a href="../../../io/mats3/spring/MatsSpringAnnotationRegistration.html" title="class in io.mats3.spring"><code>MatsSpringAnnotationRegistration</code></a> (which is a <code>BeanPostProcessor</code>) will have each bean in
  the Spring ApplicationContext presented:
  <ol>
  <li>Each <a href="../../../io/mats3/MatsFactory.html" title="interface in io.mats3"><code>MatsFactory</code></a> bean will have their <a href="../../../io/mats3/MatsFactory.html#holdEndpointsUntilFactoryIsStarted--"><code>MatsFactory.holdEndpointsUntilFactoryIsStarted()</code></a> method
  invoked.</li>
- <li>Each bean which will have all their methods searched for the relevant annotations. Such annotated methods will be
- put in a list.</li>
+ <li>Each bean, and each method of each bean, will be searched for the relevant annotations. Such annotated methods
+ will be put in a list.</li>
  </ol>
  </li>
  <li>Upon <code>ContextRefreshedEvent</code>:
@@ -150,22 +150,35 @@ implements org.springframework.beans.factory.config.BeanPostProcessor, org.sprin
  </ol>
  </li>
  </ol>
- Do notice that <i>all</i> MatsFactories in the Spring ApplicationContext are started, regardless of whether they had
+ <p>
+ Notice: <code>ContextRefreshedEvent</code> is invoked late in the Spring ApplicationContext startup procedure. This means
+ that all beans have been fully injected, and any <code>@PostConstruct</code> and lifecycle events have been run. Thus, if
+ the Endpoint depends on any bean/service, it is now running. This is important as the Endpoint's Stage Processors
+ will start picking messages of the queue pretty much immediately. And this is important again if you have any cache
+ that takes time to be populated - it might be of interest to instead use programmatic registration and implement
+ delayed start for Endpoints which depends on caches that take a substantial time to load.
+ </p>
+ <p>
+ Notice: <i>All</i> MatsFactories found in the Spring ApplicationContext are started, regardless of whether they had
  any Mats endpoints registered using the Mats SpringConfig. This implies that if you register any Mats endpoints
- programmatically using e.g. <code>@PostConstruct</code> or similar functionality, these will also be started.
- <p />
- <h3>This is the shutdown procedure:</h3>
+ programmatically using e.g. <code>@PostConstruct</code> or similar functionality, these will also be started - unless
+ they have not had their <a href="../../../io/mats3/MatsEndpoint.html#finishSetup--"><code>MatsEndpoint.finishSetup()</code></a> method invoked, ref. "delayed start" mentioned above.
+ </p>
+ <p/>
+ <h3>Shutdown procedure:</h3>
  <ol>
  <li>Upon <code>ContextClosedEvent</code>, all MatsFactories in the ApplicationContext will have their
  <a href="../../../io/mats3/MatsFactory.html#stop-int-"><code>stop()</code></a> method invoked.
  <li>This causes all registered Mats Endpoints to be <a href="../../../io/mats3/MatsEndpoint.html#stop-int-"><code>stopped</code></a>, which releases the
  connection to the underlying MQ and stops the stage processor threads.
  </ol>
- Notice: ContextClosedEvent is fired rather early in the Spring ApplicationContext shutdown procedure. When running in
- integration testing mode, which typically will involve starting an in-vm ActiveMQ in the same JVM as the endpoints,
- this early stopping and releasing of connections is beneficial so that when the in-vm ActiveMQ is stopped somewhat
- later, one won't get a load of connection failures from the Mats endpoints which otherwise would have their
- connections shut down under their feet.</div>
+ <p>
+ Notice: <code>ContextClosedEvent</code> is fired rather early in the Spring ApplicationContext shutdown procedure. When
+ running in integration testing mode, which typically will involve starting an in-vm ActiveMQ in the same JVM as the
+ endpoints, this early stopping and releasing of connections is beneficial so that when the in-vm ActiveMQ is stopped
+ somewhat later, one won't get a load of connection failures from the Mats endpoints which otherwise would have their
+ connections shut down under their feet.
+ <p/></div>
 </li>
 </ul>
 </div>

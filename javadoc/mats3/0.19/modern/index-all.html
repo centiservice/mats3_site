@@ -2875,7 +2875,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/mats3/spring/MatsClassMapping.html" class="type-name-link" title="annotation interface in io.mats3.spring">MatsClassMapping</a> - Annotation Interface in <a href="io/mats3/spring/package-summary.html">io.mats3.spring</a></dt>
 <dd>
 <div class="block">A class annotated with this repeatable annotation will become a Mats Endpoint, where an instance of the class itself
- is the State (STO) object for the Endpoint, and each method on the class is a stage of the Endpoint.</div>
+ is the State (STO) object for the Endpoint, and each @<a href="io/mats3/spring/MatsClassMapping.Stage.html" title="annotation interface in io.mats3.spring"><code>Stage</code></a>-annotated method on the class is a stage of
+ the Endpoint.</div>
 </dd>
 <dt><a href="io/mats3/spring/MatsClassMapping.MatsClassMappings.html" class="type-name-link" title="annotation interface in io.mats3.spring">MatsClassMapping.MatsClassMappings</a> - Annotation Interface in <a href="io/mats3/spring/package-summary.html">io.mats3.spring</a></dt>
 <dd>&nbsp;</dd>
@@ -2959,7 +2960,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/mats3/MatsFactory.html" class="type-name-link" title="interface in io.mats3">MatsFactory</a> - Interface in <a href="io/mats3/package-summary.html">io.mats3</a></dt>
 <dd>
 <div class="block">The start point for all interaction with Mats - you need to get hold of an instance of this interface to be able to
- code and configure Mats endpoints, and to perform initiations (i.e.</div>
+ code and configure Mats endpoints, and to perform <a href="io/mats3/MatsFactory.html#getDefaultInitiator()"><code>initiations</code></a> like sending a message,
+ perform a request and publish a message.</div>
 </dd>
 <dt><a href="io/mats3/MatsFactory.ContextLocal.html" class="type-name-link" title="class in io.mats3">MatsFactory.ContextLocal</a> - Class in <a href="io/mats3/package-summary.html">io.mats3</a></dt>
 <dd>
