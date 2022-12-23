@@ -7,7 +7,7 @@ last_modified_at: 2022-12-13T00:18:00
 classes: wide
 ---
 
-In the [previous chapter](mats-flow-initiation/) we saw how to initiate a Mats Flow. However, if you need the result of
+In the [previous chapter](/docs/mats-flow-initiation/) we saw how to initiate a Mats Flow. However, if you need the result of
 a Mats Request _in this thread_, you'll run into a problem: An initiated Mats flow will not execute in, and definitely
 not return to, the initiating thread.
 

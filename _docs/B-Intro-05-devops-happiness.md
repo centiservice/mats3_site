@@ -1,5 +1,5 @@
 ---
-title: "Happy Developers"
+title: "Happy Devs and Ops"
 permalink: /docs/devops-happiness/
 excerpt: "Mats makes developers happy!"
 created_at: 2022-12-07T23:40:55
