@@ -73,6 +73,13 @@ plugins:
   - jemoji
   - jekyll-include-cache
 
+# Analytics
+analytics:
+  provider               : "google-gtag"
+  google:
+    tracking_id          : "G-91MDMWEREG"
+    anonymize_ip         : false
+
 author:
   name   : "Endre Stølsvik"
   avatar : "/assets/images/bio-photo.jpg"
