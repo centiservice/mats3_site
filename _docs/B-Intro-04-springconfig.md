@@ -61,7 +61,7 @@ value, another Mats Endpoint is consulted._
 @MatsClassMapping("ShippingService.calculateShipping")
 class ShippingEndpointClass {
 
-    // Injected
+    // Spring-injected dependency
     private transient ShippingService _shippingService;
 
     @Autowired
@@ -69,10 +69,10 @@ class ShippingEndpointClass {
         _shippingService = shippingService;
     }
 
-    // The ProcessContext can be injected, or sent as argument to stage methods
+    // ProcessContext: Injected, or provided as argument to stage methods
     ProcessContext<ShippingCostReply> _context;
 
-    // This is the state field
+    // This field is part of the Endpoint's state
     List<OrderLine> _orderLines;
 
     @Stage(0)

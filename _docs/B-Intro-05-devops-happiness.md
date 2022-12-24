@@ -82,7 +82,7 @@ There's a document about traceIds and initatorIds
 
 ### Intercept API, Logging and Metrics
 
-There's an additional API implemented by the JMS Mats implementation: The Matgs Intercept API. This provides hooks to
+There's an additional API implemented by the JMS Mats implementation: The Mats Intercept API. This provides hooks to
 all stages of a Mats flows, from initiation, message sending, message reception and processing.
 
 There are two standard plugins to Mats, implemented over the Intercept API, which provide a very rich logging
