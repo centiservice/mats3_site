@@ -71,4 +71,4 @@ document going further into this [here](https://github.com/centiservice/mats3/bl
 
 Okay, creating Mats endpoints, Flow initiations and async-sync bridge: Nailed. But you're in a Spring setting, and using
 programmatic Java to configure Mats Endpoints feels a bit last century. Annotations
-rocks! [next chapter](/docs/springconfig/)
+rocks! [next chapter](/docs/springconfig/) _(Or go to [explore](/docs/explore)!)_

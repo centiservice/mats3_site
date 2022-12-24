@@ -64,14 +64,14 @@ even more in-flight processes. And now you would have to rummage through multipl
 where each of these stranded, and need extreme insight into the system to get those processes going again, or reset them
 and get them to start over.
 
-And then I got to experience this first hand. Me and some colleagues were working on NSB.no, the website of the
-Norwegian state's railroad. This is a fairly heavily used site. Our part used four quite beefy frontend servers, with
-1000 workers each running PHP, then a backend-for-frontend mid-tier using Java and Jetty. We interfaced to the backend
-core system called Lisa. Suddenly one day, NSB.no was down. Turns out that Lisa had started answering _really_ slow.
-This led to our mid-tier getting all its Servlet threads blocked. And this again eventually got all workers of Apache to
-hang on Jetty. So, even though the frontpage didn't need the mid-tier, the entire site was now down. We poured through
-logs, and made a little script to check the usage, basically counting entry-to-exit, and found that all the 4000 workers
-of Apache had jammed up in less than 90 seconds from Lisa becoming slow.
+And then I got to experience a cascading failure first hand. Me and some colleagues were working on NSB.no, the website
+of the Norwegian state's railroad. This is a fairly heavily used site. Our part used four quite beefy frontend servers,
+with 1000 workers each running PHP, then a backend-for-frontend mid-tier using Java and Jetty. We interfaced to the
+backend core system called Lisa. Suddenly one day, NSB.no was down. Turns out that Lisa had started answering _really_
+slow. This led to our mid-tier getting all its Servlet threads blocked. And this again eventually got all workers of
+Apache to hang on Jetty. So, even though the frontpage didn't need the mid-tier, the entire site was now down. We poured
+through logs, and made a little script to check the usage, basically counting entry-to-exit, and found that all the 4000
+workers of Apache had jammed up in less than 90 seconds from Lisa becoming slow.
 
 While it is possible to handle any such problems that synchronous communication gives, by explicitly program for each
 kind of failure, implementing idempotent retries, using external state keeping, sagas, backpressure, circuit breakers

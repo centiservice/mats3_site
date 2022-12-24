@@ -34,3 +34,5 @@ docs:
         url: /docs/interception/
       - title: "MatsBrokerMonitor"
         url: /docs/matsbrokermonitor/
+      - title: "Explore Mats"
+        url: /docs/explore/

@@ -44,3 +44,6 @@ being "SLF4J for Metrics". From your metrics system, you may then graph out e.g.
 commit times etc.
 
 See JavaDoc [here](/javadoc/mats3/0.19/modern/io/mats3/intercept/micrometer/MatsMicrometerInterceptor.html)
+
+Right, so we've seen how to make endpoints, talk with them, and install logging and other interceptors - but you should
+also monitor your broker. MatsBrokerMonitor can do that, check [next chapter](/docs/matsbrokermonitor/)!
