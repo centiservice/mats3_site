@@ -28,7 +28,7 @@ repo [README.md](https://github.com/centiservice/mats3#readme). After that, ther
 the [docs folder](https://github.com/centiservice/mats3/tree/main/docs#readme) of the repo. A fairly substantial 
 document worth fetching a cup of coffee for is [Endpoints and Initiations](https://github.com/centiservice/mats3/blob/main/docs/developing/EndpointsAndInitiations.md). Well, make that a coffee pot, actually.
 
-### Tests @ Mats<sup>3</sup> repo
+### Tests & Code @ Mats<sup>3</sup> repo
 
 Many of the unit tests are instructive, so you can head over to the tests of
 [API](https://github.com/centiservice/mats3/tree/main/mats-api-test/src/test/java/io/mats3/api_test),
@@ -41,7 +41,7 @@ and tests of the testing tools for
 There's also a rudimentary "dev area" with a _TestJettyServer_ for the Metrics Interceptor
 [MatsMetrics](https://github.com/centiservice/mats3/tree/main/mats-intercept-micrometer/src/test/java/io/mats3/test/metrics/MatsMetrics_TestJettyServer.java),
 and same for Local Introspector [LocalHtmlInspect](https://github.com/centiservice/mats3/tree/main/mats-localinspect/src/test/java/io/mats3/localinspect/LocalHtmlInspect_TestJettyServer.java),
-both of which you may start from your IDE.
+both of which you may start from your IDE - check out chapter [Explore Mats<sup>3</sup>](/docs/explore/)!
 
 ### Reach out!
 
