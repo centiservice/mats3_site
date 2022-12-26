@@ -13,16 +13,21 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Mats3
+title: "Mats3: Message-based Asynchronous Transactional Staged Stateless Services"
+subtitle: Messaging-Oriented Asynchronous RPC
+masthead_title: Mats<sup>3</sup>
 email: endre@stolsvik.com
-description: >- # this means to ignore newlines until "baseurl:"
+name: Endre Stølsvik
+description: >-
   Mats3: Message-based Asynchronous Transactional Staged Stateless Services.
   Inter-Service Communication library providing callable messaging-based service endpoints.
+repository: https://github.com/centiservice/mats3
 twitter_username: stolsvik
 github_username: stolsvik
 url: https://mats3.io
 minimal_mistakes_skin: dark
 search: true
+search_full_content: true
 
 # Localhost development port when using 'serve'
 port: 4000
