@@ -17,8 +17,9 @@ Mats have pretty extensive [JavaDoc](/javadoc/), so when you need something from
 
 ### Documentation @ mats3.io
 
-Step through the navigation pane to the left! [Start here!](/docs/message-oriented-rpc) This is meant to be a guided
-introduction to what Mats is, and the basics of using it.
+Step through the navigation pane to the left (desktop) or click _"Toogle Menu"_ at top (mobile)!
+[Start here!](/docs/message-oriented-rpc/)
+This is meant to be a guided introduction to what Mats is, and the basics of using it.
 
 ### Documentation @ Mats<sup>3</sup> repo
 

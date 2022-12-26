@@ -88,7 +88,7 @@ all stages of a Mats flows, from initiation, message sending, message reception 
 There are two standard plugins to Mats, implemented over the Intercept API, which provide a very rich logging
 experience (using SLF4J), and metrics for e.g. Prometheus (using Micrometer).
 
-For more about interception, logging and metrics, read [own article](/docs/interception).
+For more about interception, logging and metrics, read [own article](/docs/interception/).
 
 ### MatsTrace
 

@@ -131,4 +131,4 @@ shipping of widgets arrived" scenario, where you in the Terminator want to set t
 a web user interface.
 
 So, how can we bridge between a HTTP endpoint's synchronous world, and the utterly asynchronous and distributed
-processing of Mats? Go to the [next chapter!](/docs/sync-async-bridge)
+processing of Mats? Go to the [next chapter!](/docs/sync-async-bridge/)
