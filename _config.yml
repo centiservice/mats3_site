@@ -74,7 +74,7 @@ plugins:
 # Social Sharing
 twitter:
   username: stolsvik
-og_image: /assets/images/Mats3Logo.svg   # Open Graph/Twitter default site image
+og_image: /assets/images/Mats3Logo-640x640.png   # Open Graph/Twitter default site image
 # EndreXY 2022-08-07: Based on https://github.com/github/pages-gem/issues/399#issuecomment-301827749
 # .. to fix the problem "GitHub Metadata: No GitHub API authentication could be found.
 #     Some fields may be missing or have incorrect data."
