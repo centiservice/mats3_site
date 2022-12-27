@@ -23,7 +23,7 @@ feature_row:
     btn_class: "btn--primary"
     btn_label: "Learn more"
   - title: "Sync-Async bridge"
-    excerpt: "_MatsFuturizer_ enables a sync setting, like a Servlet, to invoke a Mats Endpoint"
+    excerpt: "_MatsFuturizer_ enables a sync setting, like a Servlet, to invoke a Mats Endpoint."
     url: "/docs/sync-async-bridge/"
     btn_class: "btn--primary"
     btn_label: "Learn more"
