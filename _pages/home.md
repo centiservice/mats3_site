@@ -4,7 +4,7 @@ permalink: /
 title: Mats<sup>3</sup>
 hidden: true
 header:
-  overlay_color: "#F7420A"
+  overlay_color: "#F75000"
   # overlay_image: /assets/images/mm-home-page-feature.jpg
   actions:
     - label: "<i class='fab fa-fw fa-github'></i> GitHub"
