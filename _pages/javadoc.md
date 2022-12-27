@@ -1,6 +1,7 @@
 ---
 permalink: /javadoc/
 title: "JavaDoc"
+excerpt: "Extensive JavaDoc for the Mats3 APIs and utilities."
 ---
 
 There are two sets of JavaDoc: A "classic" made with JDK 8, which still have the beloved JavaDoc frameset, and a

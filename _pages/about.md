@@ -1,6 +1,7 @@
 ---
 permalink: /about/
 title: "About"
+excerpt: "Some history for why Mats3 was made."
 classes: wide
 ---
 

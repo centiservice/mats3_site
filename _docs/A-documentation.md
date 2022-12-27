@@ -1,7 +1,7 @@
 ---
 title: "Documentation"
 permalink: /docs/
-excerpt: "Overview over Mats3 documentation"
+excerpt: "Overview of Mats3 documentation"
 created_at: 2022-12-07T23:45:44
 last_modified_at: 2022-12-13T23:14:35
 toc: true
