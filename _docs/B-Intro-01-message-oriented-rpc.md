@@ -7,9 +7,9 @@ last_modified_at: 2022-12-13T23:14:05
 classes: wide
 ---
 
-
-Mats<sup>3</sup> is a library that attempts to make message-oriented architectures mimic a synchronous, blocking and
-linear way of coding.
+Mats<sup>3</sup> is a client side Java library, currently implemented on top of JMS talking via ActiveMQ or Artemis
+as message broker. It attempts to make message-oriented programming mimic a synchronous, blocking and linear/sequential
+way of coding.
 
 ## ISC using HTTP
 

@@ -5,8 +5,11 @@ excerpt: "Some history for why Mats3 was made."
 classes: wide
 ---
 
-Mats<sup>3</sup> is a library that attempts to make message-oriented architectures mimic a synchronous, blocking way of
-coding. Read more [here](/docs/message-oriented-rpc/)
+Mats<sup>3</sup> is a client side Java library, currently implemented on top of JMS talking via ActiveMQ or Artemis
+as message broker. It attempts to make message-oriented programming mimic a synchronous, blocking and linear/sequential
+way of coding.
+
+Read more [here](/docs/message-oriented-rpc/)
 
 # Background
 
@@ -32,6 +35,8 @@ level of failure scenario.
 This again requires multiple computers, since a failure mode is that one computer burns down to the ground. These
 multiple computers needs to communicate to agree on who should do what.
 
+## Interservice Communications
+
 However, when going down into protocols for communication, I basically found that most recommendations, at least most
 practice, was using blocking comms, typically over HTTP.
 
@@ -54,6 +59,8 @@ important feature was that it was not XML, SOAP and WSDL. _(Or maybe we've just 
 REST [wrong all the time?](https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/))_
 
 However, everything was still synchronous and blocking. Which I just could not get my head around.
+
+## State is a problem
 
 What I perceive as the primary problem is _state_: The state for in-flight processes is residing in memory, possibly
 just on the stack of some blocking thread. To handle errors, where some dependent service goes down midway, you also
@@ -78,6 +85,8 @@ While it is possible to handle any such problems that synchronous communication 
 kind of failure, implementing idempotent retries, using external state keeping, sagas, backpressure, circuit breakers
 and whatnots, the end result will typically always be that you've pretty much coded up something else entirely.
 
+## Messaging solves many problems
+
 What I started to realize was that asynchronous messaging, with transactional execution of each stage, would have fixed
 most of these problems by its basic nature.
 
@@ -93,6 +102,8 @@ with other computers. And what is then the obvious way? Invoke a _remote_ method
 your brain exactly the same as invoking a local method. Problem solved, case closed. Messaging is only just briefly, if
 at all, considered in passing - this HttpClient here solves it all, and look how simple it is to invoke, even just using
 a webbrowser. Nevermind those 8 fallacies.
+
+## Mats<sup>3</sup> helps out!
 
 So, what is the actual problem with messaging? I believe it first and foremost is that the mental model is utterly
 different, and on top of this, the existing tooling isn't great.
