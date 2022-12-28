@@ -58,16 +58,18 @@ _Unit test [here](https://github.com/centiservice/mats3/blob/main/mats-util/src/
 
 _JavaDoc of `MatsFuturizer` [here](https://mats3.io/javadoc/mats3/0.19/modern/io/mats3/util/MatsFuturizer.html)._
 
-**Notice!! Please make sure that you never code a Mats Endpoint where a stage executes a MatsFuturization**: This breaks
-the premise and guarantees of Mats pretty hard, in that you now have a Mats Stage waiting synchronously and statefully
-on a nested Mats Flow. If the machine processing this stage goes down, it takes the future with it. But the stage of
-this "outer" flow will redeliver, starting yet another "inner" futurized flow. And the inner flow may DLQ, which will
-eventually result in a timeout in the waiting stage of the outer flow, which will retry, again starting a new inner
-futurized flow - which of course may again DLQ. The big point is that invoking one Mats Endpoint from another Mats
-Endpoint is literally the entire point of the Mats stack and the `request` method: "Synchronous nesting" breaks the
-linearity and asynchronicity of a Mats Flow in a very fundamental way. **The MatsFuturizer should only be used on the
-very outer edges, where you have a synchronous call that needs to bridge into the asynchronous Mats fabric.** There's a
-document going further into this [here](https://github.com/centiservice/mats3/blob/main/docs/developing/MatsComposition.md).
+> **Notice!! Please make sure that you never code a Mats Endpoint where a stage ends up executing a MatsFuturization**:
+> While it does work, *in the good path*, it breaks the premise and guarantees of Mats pretty hard. You now have a stage
+> of a Mats Flow waiting synchronously and statefully on a *nested*, *separate* Mats Flow. Such a setup have several
+> sharp corners, all revolving around the non-good-paths. For example, if the machine processing this stage goes down,
+> it takes the future with it. But the stage of this "outer" flow will redeliver, starting yet another "inner" futurized
+> flow. And the inner flow may DLQ, which will eventually result in a timeout in the waiting stage of the outer flow,
+> which will retry, again starting a new inner futurized flow - which of course may again DLQ. The big point is that
+> invoking one Mats Endpoint from another Mats Endpoint is literally the entire point of the Mats stack and the
+> `request` method. "Synchronous nesting" breaks the linearity and asynchronicity of a Mats Flow in a very fundamental
+> way. **The MatsFuturizer should only be used on the very outer edges, where you have a synchronous call that needs to
+> bridge into the asynchronous Mats fabric.** There's a document going further into this
+> [here](https://github.com/centiservice/mats3/blob/main/docs/developing/MatsComposition.md).
 
 Okay, creating Mats endpoints, Flow initiations and async-sync bridge: Nailed. But you're in a Spring setting, and using
 programmatic Java to configure Mats Endpoints feels a bit last century. Annotations
