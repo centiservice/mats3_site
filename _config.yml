@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: "Mats3: Message-based Asynchronous Transactional Staged Stateless Services"
 masthead_title: Mats<sup>3</sup>
-subtitle: Messaging-Oriented Asynchronous RPC
+subtitle: Messaging-Oriented Async RPC
 logo: /assets/images/Mats3Logo.svg
 email: endre@stolsvik.com
 name: Endre Stølsvik
