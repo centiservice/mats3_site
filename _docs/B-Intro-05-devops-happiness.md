@@ -30,34 +30,47 @@ There's more about the transactionality of Mats [here](https://github.com/centis
 
 ### Pragmatic and natural API with lots of functionality for many situations
 
-* Flow message types - what outgoing function you can do in a stage:
+* Flow message types - what outgoing functions you can do in a stage:
   * `request` and `reply`: demonstrated a few chapters ago.
-  * `next`: Jump to the next stage. This is used to construct "if-else" solutions within Mats Flows: You might in some
+  * `next`: Jump to the next stage. This is used to construct "if-else" constructs within Mats Flows: You might in some
     instance of this process need to communicate with a collaborating service, while in others, you can just go directly
     to the next stage.
   * `nextDirect`: A faster variant of next, where the next stage is directly invoked without swinging by the message
-    broker.
+    broker and also eliding the transactional demarcation between the two stages.
   * `goTo`: For some scenarios it would be nice to keep the call stack and go directly to another endpoint. When the
     goto'ed endpoint replies, it will reply to the caller of this endpoint. Useful in a dispatcher situation, and also
     in a tail call situation.
 * Initiate new flows within a stage processing. These flows are started within the same transactional demarcation as the
   stage they're running. Can both be used for orchestration, and for sending off a "side flow" for notification to a
   different system. They automatically inherit the current Flow's traceId, but you can append to it.
-* Use pub/sub messaging, i.e. Topics, by use of `subscriptionTerminator`-type Endpoint, and `publish` instead of `send`.
-  You may also target the reply in an initiation to go to a subscriptionTerminator by using `replyToSubscription(...)`.
-  You may think of this as a "broadcast"-functionality, compared to the single-fibre Mats Flows.
+* Use pub/sub messaging, i.e. _topic_-semantics instead of queues, by use of `subscriptionTerminator`-type Endpoint,
+  and `publish` instead of `send`. You may also target the reply in an initiation to go to a subscriptionTerminator by
+  using `replyToSubscription(...)`. You may think of this as a "broadcast"-functionality, compared to the single-fibre
+  Mats Flows. Useful in cache population and -invalidation, as well as updating state & GUIs no matter which node a user
+  is connected to.
 * "Sideload" larger binary and text data, to e.g. carry a PDF document (but, do mind your message sizes!)
 * "TraceProperties", acting like a ThreadLocal - basically a "FlowLocal": These props are present on the Mats Flow, i.e.
   available for all downstream stages, from when they are set, which can be both at initiation and any stage.
+* `MatsFuturizer`-utility for sync-async bridge - see [own article](/docs/sync-async-bridge/). In GUI-settings, the
+  sister project [MatsSocket](https://matssocket.io) should also be checked out.
+* `interactive`-priority Mats Flows: If you mark an initiation as interactive, it gets a "cut the line" flag through the
+  entire flow processing. This means that the same endpoints may be used for batch processing, racking up queues, but
+  still be used for human-interactive GUI operations.
+* `nonPersistent` Mats Flows: Marking an initiation as non-persistent results in the MQ broker not persisting the
+  messages, thereby gaining a substantial speed advantage. It does mean that it is possible that the flow will be
+  broken (if the broker crashes or is booted, as the messages are only stored in mem), but in GUI settings where the
+  flow only concerns getters of information, this tradeoff is most probably worth it. The combination `interactive` +
+  `nonPersistent` is common, and is what the `MatsFuturizer` sets when the `futurizeNonessential(..)`-method is
+  employed.
 * `stash` and `unstash` a Mats Flow: For some processes, you might need to invoke another asynchronous service with
   possibly very varying response times. To not hold up the stage processor, you can stash the flow. This gives you a
   byte array which you need to store, typically in a database. The Mats Flow is now "frozen". When you eventually get
   the response from the outside service, you can unstash the Mats Flow and provide the result, thus continuing the flow
   from there. This can also be used to park a flow while a human is evaluating some details, e.g. identification - but
-  it is not meant for long term storage.
+  it is not meant for long term parking of flows, as that increases the chance of deserialization errors if you change
+  state objects or DTOs active in the flow.
 * Add own metrics: On the stage context, you can add metric measurements and timings, e.g. how long a db query takes.
   These are available for the Interceptor API, and can be output in logging and metrics - see next chapter.
-* `MatsFuturizer`-utility for sync-async bridge - see [own article](/docs/sync-async-bridge/)
 
 ### TraceId - following a Mats Flow from start to finish
 
