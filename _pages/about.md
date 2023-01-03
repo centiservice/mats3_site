@@ -13,13 +13,13 @@ Read more [here](/docs/message-oriented-rpc/)
 
 # Background
 
-The author has been interested in computer since the Commodore 64 days, and in particular found super computers and
-distributed computing fascinating. In my younger years I repaired computers to earn some extra cash. This made it
-obvious that computers can fail - my money flow actually depended on it! When the computers started being networked, it
-was pretty obvious that multiple computers in a network fail way more than a single home computer can do on its own. As
-the world started relying more and more on computers and IT systems, it became obvious that many systems requires very
-high uptime. This is of course problematic since failures can spuriously occur on any level in any part of the composite
-system, both due to dumb human-created bugs, but also since hardware can just randomly fail.
+I have been interested in computers since the Commodore 64 days, and early found an interest in high performance and
+distributed computing. In my younger years I repaired computers to earn some extra cash. This made it obvious that
+computers can fail - my money flow actually depended on it! When the computers started being networked, it was pretty
+obvious that multiple computers in a network fail way more than a single home computer can do on its own. As the world
+started relying more and more on IT systems, it became obvious that many systems requires very high uptime. This is of
+course problematic since failures can spuriously occur on any level in any part of the composite system, both due to
+dumb human-created bugs, but also since hardware can just randomly fail.
 
 There have been many attempts at handling this, basically taking two routes: Either make the system never fail, or
 handle failures. When at university, I got to visit Hewlett-Packard and was shown their
@@ -37,14 +37,14 @@ multiple computers needs to communicate to agree on who should do what.
 
 ## Interservice Communications
 
-However, when going down into protocols for communication, I basically found that most recommendations, at least most
-practice, was using blocking comms, typically over HTTP.
+However, when going down into protocols for communication, I found that most recommendations, at least most practice,
+was using blocking comms, typically over HTTP.
 
 _Service-Oriented Architecture_ became all the rage, using XML and SOAP and WSDL, and even though this supposedly
-supported asynchronous modes, even sending messages over SMTP, this was never utilized: Every single application used
-HTTP. Then SOA got out of favour due to its complexity. As a tangent, I would argue that it was also due to immaturity
-on several levels. The software solutions were clumsy and error prone, and the generated schemas and messages were
-hellish to read. But more importantly, "granularity killed SOA": People forgot about the 8 fallacies of distributed
+supported asynchronous modes, even sending messages over SMTP, this was never utilized: In practice, all applications
+used HTTP. Then SOA got out of favour due to its complexity. As a tangent, I would argue that it was also due to
+immaturity on several levels. The software solutions were clumsy and error prone, and the generated schemas and messages
+were hellish to read. But more importantly, "granularity killed SOA": People forgot about the 8 fallacies of distributed
 computing. In particular, since it was instance oriented, developers were prone to first do `remoteUser.getFirstname()`,
 and then `remoteUser.getLastname()`. The result was pure molasses. And that is just due to a few of the fallacies.
 
