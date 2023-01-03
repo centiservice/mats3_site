@@ -7,11 +7,13 @@ header:
   overlay_color: "#F75000"
   # overlay_image: /assets/images/mm-home-page-feature.jpg
   actions:
-    - label: "<i class='fab fa-fw fa-github'></i> GitHub"
+    - label: "<i class='fa fa-book'></i> <b>Docs</b>"
+      url: "/docs/"
+    - label: "<i class='fab fa-github'></i> GitHub"
       url: "https://github.com/centiservice/mats3"
     - label: "Maven Central"
       url: "https://mvnrepository.com/artifact/io.mats3"
-    - label: "Sister project: MatsSocket"
+    - label: "<i class='fa fa-arrow-up'></i> Sister project: MatsSocket"
       url: "https://matssocket.io/"
 excerpt: >
   Message-based Interservice Communication made easy!<br />

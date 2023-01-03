@@ -5,9 +5,9 @@ excerpt: "Some history for why Mats3 was made."
 classes: wide
 ---
 
-Mats<sup>3</sup> is a client side Java library, currently implemented on top of JMS talking via ActiveMQ or Artemis
-as message broker. It attempts to make message-oriented programming mimic a synchronous, blocking and linear/sequential
-way of coding.
+Mats<sup>3</sup> is a client side Java library that makes asynchronous message-oriented interservice communications
+mimic a synchronous, blocking and linear/sequential way of coding. The Mats<sup>3</sup> API is currently implemented on
+top of JMS talking via ActiveMQ or Artemis as message broker.
 
 Read more [here](/docs/message-oriented-rpc/)
 
