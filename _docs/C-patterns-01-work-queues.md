@@ -14,8 +14,8 @@ When having many jobs that needs processing, throwing them all on the MQ might n
 So, say you have a heap of outstanding, not-fulfilled orders. You then get some new information, possibly incoming
 products, which makes a bunch of these orders fulfillable.
 
-Say 10 000 orders became fulfullable at the same time, and you now need to start a process for each of them, which will
-span multiple services.
+Say 10 000 orders became fulfullable at the same time, and you now need to start a process for each of them, where the
+processes will consist of multiple stages spanning multiple services.
 
 If you were using HTTP as your interservice communications, you would most probably _not_ fire up 10k threads and do
 them all at once. You would rather pick e.g. 10 of them and run these in parallel (or better yet, batch them, but that's
@@ -101,7 +101,8 @@ staging verification actually held true in production.
 
 All this said: There are very good arguments for batching. This one-by-one logic will obviously result in very many
 "singular" accesses to databases and other external resources, from all the processing stages in the flow. Instead, you
-could send all 10k in one message - where you've coded all downstream stages to also handled multiple at the same time.
+could send all 10k jobs in one message - where you've coded all downstream stages to also handle multiple jobs at the
+same time.
 
 Batching is smart if all jobs will be handled exactly the same (i.e. report generation where you make the exact same
 document for all customers), and less compelling if there are twists and forks in the process - one job would take this
