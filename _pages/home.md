@@ -71,14 +71,15 @@ flexible resource management.
 
 Despite these benefits, many developers and architects shy away from message-oriented architectures due to the
 challenges of implementing and maintaining them. It requires a shift to asynchronous, multi-staged distributed
-processing, often spanning multiple codebases, and the result can be difficult to grasp and manage.
+processing, where processing flows often span multiple services and codebases, and the result can be difficult to grasp
+and manage.
 {: style="text-align: justify;"}
 
-In contrast, protocols over HTTP offers a synchronous and blocking code style that is easy to follow and simple to
-reason about, which is why they're often preferred over messaging.
+In contrast, synchronous protocols, typically over HTTP, offers a sequential and blocking code style that is simpler to
+follow and easy to reason about, which is why they're often preferred over messaging.
 {: style="text-align: justify;"}
 
-### Mats<sup>3</sup> Gives You Messaging With a Call Stack!
+### Mats<sup>3</sup> Solves the Cognitive Load of Messaging!
 
 Mats<sup>3</sup> allows developers to code message-based systems in a way that feels familiar and intuitive, using a
 linear, blocking-like programming style. But at the same time, systems using Mats<sup>3</sup> get to enjoy all the
