@@ -88,8 +88,23 @@ to dedicated GUIs for daily work)
 If you make a solution whereby you can stop the issuer runtime, you would have a "stop the world!" button so that if you
 realized that there is a problem, you would have a way to reduce the mess and resulting clean up.
 
-These numbers can be tuned, maybe even runtime if you code up something. This will be nice in the future, when you for
-the first time set your rather large processing refactoring into production: You could reduce the number of issued jobs,
-and increase the interval. Maybe you could even stop the issuer, and manually run a single issue, and follow the
-resulting one or few orders through - to see if your code testing and staging verification actually held true in
-production.
+These numbers can be tuned, maybe even runtime if you code up something. You could increase the number of issued per
+batch, you could reduce the interval, or make a smarter solution which tried to continuously keep a given number of
+orders "in flow" - tuning the concurrency, speed and load.
+
+This will be nice in the future, when you for the first time set your rather large processing refactoring into
+production: You could reduce the number of issued jobs, and increase the interval. Maybe you could even stop the issuer,
+and manually run a single issue, and follow the resulting one or few orders through - to see if your code testing and
+staging verification actually held true in production.
+
+## Batching instead?
+
+All this said: There are very good arguments for batching. This one-by-one logic will obviously result in very many
+"singular" accesses to databases and other external resources, from all the processing stages in the flow. Instead, you
+could send all 10k in one message - where you've coded all downstream stages to also handled multiple at the same time.
+
+Batching is smart if all jobs will be handled exactly the same (i.e. report generation where you make the exact same
+document for all customers), and less compelling if there are twists and forks in the process - one job would take this
+route, while another that route, based on properties and circumstances.
+
+There are other avenues for batching, and it also introduces new challenges, which will be explored in a future article.
