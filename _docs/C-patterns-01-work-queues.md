@@ -50,8 +50,8 @@ heavily, and that you to some degree loose introspection, monitoring and control
    the different stage processors might be good for a normal usage, but with the load from many identical job flows
    running through multiple services at the same time, you get a degenerate situation - maybe three of the involved
    microservices different databases actually reside on the same physical server.
-   * A partial solution to this is, as mentioned, to use an initial choke-point stage processor that effectively reduces
-     the downstream concurrency.
+   * A partial solution to this is, as mentioned, to use an initial choke-point stage processor with very few, possibly
+     just one, concurrent processor. This would effectively reduce the downstream concurrency.
    * However, you could still end up in a situation where some downstream service already was struggling: Maybe there
      was another batch process going on, or some external resource was in a reduced state. Even with a reduced pacing
      from the start, you could still max out this service and get queues built up.
@@ -75,8 +75,8 @@ heavily, and that you to some degree loose introspection, monitoring and control
 
 ### Explicit Work Queues
 
-However, while there are ways to mitigate the problem you create by sending 10k jobs onto the queues at the same time,
-it might be better to use explicit work queues. You could then pace the issuing. As a simple example, this could be a
+However, while there are ways to mitigate the problem you create by sending 10k jobs onto the MQ at the same time, it
+might be better to use explicit work queues. You could then pace the issuing. As a simple example, this could be a
 schedule that runs every 15 seconds, and looks at the current list of jobs. It counts how many jobs are in state
 "PROCESSING". It tries to keep 10 jobs outstanding, and thus picks the next up to `10-count_processing` jobs that are in
 state "NEEDS_PROCESSING" (thus avoiding other states like "PROCESSING", "DONE" and "ERROR"), and starts processing for
@@ -86,8 +86,8 @@ These numbers can be tuned. You could increase the number of outstanding. You co
 make a solution where a job that "came home" to mark the job as "DONE" would trigger the job issuer. You could thus tune
 the concurrency and speed of execution versus system load and responsiveness for other concurrent work.
 
-You could make a solution whereby you could tune the numbers runtime, and also make a function whereby you can stop the
-job issuer runtime, so that you'd have a "stop the world!" button if needed: If you realize that there is a problem, you
+You could make a solution whereby you can tune the numbers runtime, and also make a function whereby you can stop the
+job issuer runtime. You'd then have a "stop the world!" button if needed: If you realize that there is a problem, you
 would have a way to reduce the mess and resulting clean up.
 
 Such runtime tuning will be nice in the future, when you for the first time set your rather heavily refactored

@@ -63,8 +63,8 @@ feature_row:
 ### Message-based Interservice Communication is Great!
 
 Interservice communication using messages has many advantages over traditional HTTP-based systems. Messaging naturally
-provides high availability, scalability, fault tolerance, great monitoring, simple error handling, and efficient and
-flexible resource management.
+provides high availability, scalability, location transparency, prioritization, processing transactionality, fault
+tolerance, great monitoring, simple error handling, and efficient and flexible resource management.
 {: style="text-align: justify;"}
 
 ### Message-based Architectures Can be Complex
@@ -82,7 +82,7 @@ follow and easy to reason about, which is why they're often preferred over messa
 ### Mats<sup>3</sup> Solves the Cognitive Load of Messaging!
 
 Mats<sup>3</sup> allows developers to code message-based systems in a way that feels familiar and intuitive, using a
-linear, blocking-like programming style. But at the same time, systems using Mats<sup>3</sup> get to enjoy all the
-advantages of an asynchronous message-oriented architecture. Mats<sup>3</sup> gives you the best of both
-worlds without the cognitive load.
+sequential and blocking-like programming style. But at the same time, systems using Mats<sup>3</sup> get to enjoy all
+the advantages of an asynchronous message-oriented architecture. Mats<sup>3</sup> gives you the best of both worlds
+without the cognitive load!
 {: style="text-align: justify;"}
