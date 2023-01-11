@@ -36,3 +36,8 @@ docs:
         url: /docs/matsbrokermonitor/
       - title: "Explore Mats"
         url: /docs/explore/
+  - title: Patterns
+    url: /patterns/
+    children:
+      - title: "Work queues"
+        url: /patterns/work-queues/
