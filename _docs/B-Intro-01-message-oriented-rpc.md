@@ -7,15 +7,22 @@ last_modified_at: 2022-12-13T23:14:05
 classes: wide
 ---
 
-Mats<sup>3</sup> is a client side Java library that makes asynchronous message-oriented interservice communications
-mimic a synchronous, blocking and linear/sequential way of coding. The Mats<sup>3</sup> API is currently implemented on
-top of JMS talking via ActiveMQ or Artemis as message broker.
+Messaging naturally provides high availability, scalability, location transparency, prioritization, stage
+transactionality, fault tolerance, great monitoring, simple error handling, and efficient and flexible resource
+management. However, messaging can be much harder to employ in practice due to a fundamentally different programming
+model.
+
+<b>Mats<sup>3</sup></b> is a client side Java library that makes asynchronous message-oriented interservice
+communications mimic a synchronous, blocking and linear/sequential way of coding, greatly reducing the mental shift and
+cognitive load, and increases developer productivity when using messaging. You gain all the positives of messaging,
+while virtually eliminating the negatives.
 
 ## ISC using HTTP
 
-When you use HTTP as your inter-service communications layer in a multi-service architecture, you naturally get a linear
-code style, since HTTP itself is a blocking protocol: You open a TCP connection to a server, send your request, and
-block while waiting for the response. You eventually get the response, at which point your thread continues the process.
+Using synchronous protocols like HTTP as your inter-service communications layer in a multi-service architecture, you
+naturally get a "top-to-bottom" sequential code style, since HTTP itself is a blocking protocol: When you need to
+communicate with a collaborating service, you open a TCP connection to a server, send your request, and block while
+waiting for the response. You eventually get the response, at which point your thread continues the process.
 
 If you had some necessary variables present before the request, these are naturally still present after the response has
 come back, so you can calculate your result based on the sum of information. You can then finish of the process, which
