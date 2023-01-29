@@ -41,3 +41,5 @@ docs:
     children:
       - title: "Work queues"
         url: /patterns/work-queues/
+      - title: "Batching"
+        url: /patterns/batching/
