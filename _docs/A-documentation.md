@@ -4,7 +4,6 @@ permalink: /docs/
 excerpt: "Overview of Mats3 documentation"
 created_at: 2022-12-07T23:45:44
 last_modified_at: 2022-12-13T23:14:35
-toc: true
 ---
 
 Mats documentation is continuously evolving. There should be enough to get you going. What I do hope will trickle in bit
@@ -17,7 +16,7 @@ Mats have pretty extensive [JavaDoc](/javadoc/), so when you need something from
 
 ### Documentation @ mats3.io
 
-Step through the navigation pane to the left (desktop) or click _"Toogle Menu"_ at top (mobile)!
+Step through the navigation pane to the left (desktop) or click _"Table of Contents"_ at top (mobile)!
 [Start here!](/docs/message-oriented-rpc/)
 This is meant to be a guided introduction to what Mats is, and the basics of using it.
 
