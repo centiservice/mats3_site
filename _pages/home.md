@@ -17,7 +17,7 @@ header:
       url: "https://matssocket.io/"
 excerpt: >
   Message-based Interservice Communication made easy!<br />
-  <small>Naturally resilient and highly available services, with great DevX and OpsX</small>
+  <small>Naturally resilient and highly available microservices, with great DevX and OpsX</small>
 feature_row:
   - title: "Message-Oriented RPC"
     excerpt: "Code fully asynchronous message-based architectures, but reason like blocking RPC."
@@ -62,27 +62,31 @@ feature_row:
 
 ### Message-based Interservice Communication is Great!
 
-Interservice communication using messages has many advantages over traditional HTTP-based systems. Messaging naturally
-provides high availability, scalability, location transparency, prioritization, processing transactionality, fault
-tolerance, great monitoring, simple error handling, and efficient and flexible resource management.
+In a Message-oriented microservice architecture, the individual services connects to a _Message Broker_ and subscribes
+to _queues_ from which they consume messages. Services also posts messages to these queues, for other services to
+consume and handle. The broker acts as an intermediary, a post-office, holding the messages from the producers until a
+consumer is ready to take it. The communication between the services is asynchronous: One service posting a message, and
+another service consuming a message, are separate operations, not blocking on each other.
+{: style="text-align: justify;"}
+
+Interservice communication using messages has many advantages over traditional synchronous HTTP-based systems. Messaging
+naturally provides high availability, scalability, location transparency, prioritization, processing transactionality,
+fault tolerance, great monitoring, simple error handling, and efficient and flexible resource management.
 {: style="text-align: justify;"}
 
 ### Message-based Architectures Can be Complex
 
-Despite these benefits, many developers and architects shy away from message-oriented architectures due to the
-challenges of implementing and maintaining them. It requires a shift to asynchronous, multi-staged distributed
-processing, where processing flows often span multiple services and codebases, and the result can be difficult to grasp
-and manage.
-{: style="text-align: justify;"}
-
-In contrast, synchronous protocols, typically over HTTP, offers a sequential and blocking code style that is simpler to
-follow and easy to reason about, which is why they're often preferred over messaging.
+Despite many benefits, developers and architects seems to shy away from message-oriented architectures due to the
+challenges of implementing and maintaining them. It requires a large mental shift to asynchronous, multi-staged
+distributed processing, where processing flows often span multiple services and codebases, and the result can be
+difficult to grasp and manage.
 {: style="text-align: justify;"}
 
 ### Mats<sup>3</sup> Solves the Cognitive Load of Messaging!
 
-Mats<sup>3</sup> allows developers to code message-based systems in a way that feels familiar and intuitive, using a
-sequential and blocking-like programming style. But at the same time, systems using Mats<sup>3</sup> get to enjoy all
-the advantages of an asynchronous message-oriented architecture. Mats<sup>3</sup> gives you the best of both worlds
-without the cognitive load!
+Mats<sup>3</sup> allows developers to code message-based systems in a way that feels familiar and intuitive, by
+providing a programming model that _appears_ to be sequential and synchronous. However, under the hood, each step of a
+Mats Endpoint is actually a separate and autonomous consumer, processor and producer of messages. Systems using
+Mats<sup>3</sup> get to enjoy all the advantages of an asynchronous, transactional and message-oriented architecture,
+while feeling as simple as if using HTTP - giving you the best of both worlds without the cognitive load!
 {: style="text-align: justify;"}
