@@ -213,7 +213,7 @@ Note that the inclusion of `WHERE transactions_fetcher_node IS NULL` in both the
 is on purpose: Since the inner sub-SELECT is executed "by itself", there is a possibility for a race condition where
 another node is also just in the process of claiming those rows. By including the condition on the outer UPDATE too,
 which is executed atomically, you prevent this race. It can potentially result in 0 claimed rows, if the other node
-managed to allocate exactly the same set, but this is better han double-allocating.
+managed to allocate exactly the same set, but this is better than double-allocating.
 
 ```sql
 -- find our allocated work
@@ -224,9 +224,9 @@ WHERE transactions_fetcher_node = < nodename >
 ```
 
 You then send a request to the Transactions service to get this data for the set of returned customers, possibly using
-a `MatsFuturizer`. When the data comes back, record the data, set the status to 'DONE', and go for another round. If you
-get any errors back, or if the MatsFuturizer times out (indicating a DLQ situation), then you can set the status to '
-ERROR'.
+a `MatsFuturizer`. When the data comes back, record the data, set the `transaction_fetcher_status` to 'DONE', and go for
+another round. If you get any errors back, or if the MatsFuturizer times out (indicating a DLQ situation), then you can
+set the status to 'ERROR'.
 
 If this returns 0 rows, you are probably finished - but do a double check by issuing the inner sub-SELECT by itself,
 which also should return 0 rows.
