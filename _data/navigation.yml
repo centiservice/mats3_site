@@ -24,7 +24,7 @@ docs:
         url: /docs/message-oriented-rpc/
       - title: "Mats Flow Initiation"
         url: /docs/mats-flow-initiation/
-      - title: "Sync-Async bridge"
+      - title: "MatsFuturizer: Sync-Async bridge"
         url: /docs/sync-async-bridge/
       - title: "SpringConfig"
         url: /docs/springconfig/
@@ -36,6 +36,32 @@ docs:
         url: /docs/matsbrokermonitor/
       - title: "Explore Mats"
         url: /docs/explore/
+  - title: Background
+    children:
+      - title: "What is Mats?"
+        url: /background/what-is-mats/
+      - title: "Rationale for Mats"
+        url: /background/rationale-for-mats/
+      - title: "System of Services"
+        url: /background/system-of-services/
+  - title: Using Mats
+    children:
+      - title: "Endpoints, Stages and Initiations"
+        url: /using-mats/endpoints-and-initiations/
+      - title: "MatsFactory"
+        url: /using-mats/matsfactory/
+      - title: "Developing  (WIP)"
+        url: /using-mats/developing-with-mats/
+      - title: "Testing  (WIP)"
+        url: /using-mats/testing-with-mats/
+      - title: "Transactions and Redelivery"
+        url: /using-mats/transactions-and-redelivery/
+      - title: "TraceId and InitiatorId"
+        url: /using-mats/traceid-and-initiatorid/
+      - title: "Composition of Endpoints"
+        url: /using-mats/composition-of-mats-endpoints/
+      - title: "Designing Services for Endpoints"
+        url: /using-mats/designing-internal-services/
   - title: Patterns
     url: /patterns/
     children:

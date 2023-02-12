@@ -1,5 +1,5 @@
 ---
-title: "Sync-Async bridge"
+title: "MatsFuturizer: Sync-Async bridge"
 permalink: /docs/sync-async-bridge/
 excerpt: "MatsFuturizer provides a tool for invoking a Mats Endpoint from a synchronous context"
 created_at: 2022-12-07T23:41:35
