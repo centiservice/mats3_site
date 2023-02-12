@@ -20,10 +20,10 @@ right?*
 
 
 > ### Attempt at a condensed explanation
-> You've got a system being made up of multiple services, in a "microservice" architecture. You run at least two
-> instances of each service, to ensure high availability. These services need to communicate. You have a set of
-> different Mats Endpoints on each service, which the other services may invoke (there might also be a set of
-> "service-private" Mats Endpoints). A Mats Endpoint can be a multi-staged service, where each Stage is an independent
+> You've got a system using microservices. You run at least two
+> instances of each service, to ensure high availability. Services need to communicate. You develop a set of
+> different Mats Endpoints on each service, which the other services may invoke. A Mats Endpoint can be a multi-staged
+> service, where each Stage is an independent
 > consumer and producer of messages to and from a message broker. A Stage of an Endpoint may invoke another Mats
 > Endpoint by way of sending a Request-message targeting the invoked Endpoint's id, which is directly mapped over to a
 > message queue name. The passed message is an envelope which contains a call stack, in addition to the Request call
@@ -46,19 +46,20 @@ right?*
 > relates the most to a Mats Endpoint - where Mats adds a call stack and state to the Request-Reply pattern, packaging
 > it in an API that lets you forget about these intricacies.
 
-A *Mats Endpoint* is a messaging-based service that contains one or multiple *Stages*. Each stage is a small independent
-multi-threaded "server" that listens to incoming messages on a queue, and performs some processing on the incoming DTO.
-For *Request* messages it will then typically either send a *Reply* message to the queue specified below it on the
-incoming message's call stack (i.e. to the caller's next stage), or perform a Request by sending a message to a
-different Mats endpoint, who's Reply will then be received on the next stage of the present endpoint.
+A *Mats Endpoint* is a messaging-based resource that contains one or multiple *Stages*. Each stage is a small,
+independent multi-threaded "micro-server" that listens to incoming messages on a queue, and performs some processing on
+the incoming DTO. For *Request* messages it will then typically either send a *Reply* message to the queue specified
+below it on the incoming message's call stack (i.e. to the caller's next stage). Or it can itself perform a Request by
+sending a message to a different Mats endpoint - the eventual Reply of the invoked Endpoint will then be received on the
+next stage of the *present* endpoint.
 
 So, in the above diagram, we have 5 independent Mats Endpoints (A to D + Terminator), and an Initiator. Each of the
 Endpoints would typically reside on a different (micro-)service, i.e. in different codebases, running inside different
 processes, albeit the Terminator would typically reside in the same codebase as the initiating code. EndpointA and
 EndpointC consist of multiple stages.
 
-In a Mats Endpoint consisting of multiple stages, the stages of the endpoint are connected with an Endpoint-specified *
-state object* ("STO") which is transparently passed along with the message flow. This is what the dashed lines
+In a Mats Endpoint consisting of multiple stages, the stages of the endpoint are connected with an Endpoint-specified
+*state object* ("STO") which is transparently passed along with the message flow. This is what the dashed lines
 represent, but the actual content of the state object follows the continuous lines, representing the logical message
 flows. (Actually, all those messages go to and from the message broker, but logically they go as shown). This state
 object gives the effect of having "local variables" that are present through all the different Stages of a particular
