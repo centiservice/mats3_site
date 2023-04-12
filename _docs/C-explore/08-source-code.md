@@ -1,21 +1,24 @@
 ---
-title: "Explore Mats"
-permalink: /docs/explore/
-excerpt: "How to get your hands dirty with Mats - explore, experiment, investigate, play around"
+title: "Source code"
+permalink: /explore/source-code/
+excerpt: "Mats3 source code is nicely organized, and has quite a bit of tests. It is worth checking out."
 created_at: 2022-12-24T11:31
-last_modified_at: 2022-12-24T11:31
+last_modified_at: 2023-04-11T21:54
 classes: wide
 ---
 
-For the time being, the simplest ways to explore and experiment with Mats<sup>3</sup> all start with checking out the
-repository, and go from there.
+The source code of Mats3 is hopefully quite sanely organized, and it has quite a bit of tests. It is worth checking out
+the repository and delve into some parts.
 
 > Note: To use Mats in a project, fetch [`mats-impl-jms`](https://mvnrepository.com/artifact/io.mats3/mats-impl-jms)
 > from [Maven Central](https://mvnrepository.com/artifact/io.mats3).
 
-So, clone down the repository, and test and build it (you can do that in a container to be on the safer side):
+Clone down the repository and build it (you can do that in a container to be on the safer side):
 ```shell
-./gradlew clean test build
+git clone git@github.com:centiservice/mats3.git
+# git clone https://github.com/centiservice/mats3.git
+cd mats3
+./gradlew clean build
 ```
 
 After this pans out, fire up your IDE and head over to the unit/integration tests of

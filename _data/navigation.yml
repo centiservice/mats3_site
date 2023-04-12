@@ -36,6 +36,13 @@ docs:
         url: /docs/matsbrokermonitor/
       - title: "Explore Mats"
         url: /docs/explore/
+  - title: Explore
+    url: /explore/
+    children:
+      - title: "JBang with Mats3"
+        url: /explore/mats-jbang/
+      - title: "Source code"
+        url: /explore/source-code/
   - title: Background
     children:
       - title: "What is Mats?"
