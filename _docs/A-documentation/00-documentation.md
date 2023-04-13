@@ -41,7 +41,7 @@ and tests of the testing tools for
 There's also a rudimentary "dev area" with a _TestJettyServer_ for the Metrics Interceptor
 [MatsMetrics](https://github.com/centiservice/mats3/tree/main/mats-intercept-micrometer/src/test/java/io/mats3/test/metrics/MatsMetrics_TestJettyServer.java),
 and same for Local Introspector [LocalHtmlInspect](https://github.com/centiservice/mats3/tree/main/mats-localinspect/src/test/java/io/mats3/localinspect/LocalHtmlInspect_TestJettyServer.java),
-both of which you may start from your IDE - check out chapter [Explore Mats<sup>3</sup>](/docs/explore/)!
+both of which you may start from your IDE - check out chapter [Explore Mats<sup>3</sup>](/explore/)!
 
 ### Reach out!
 

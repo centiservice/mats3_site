@@ -22,7 +22,7 @@ How can we employ the Mats fabric to provide information in a synchronous settin
 ## MatsFuturizer
 
 The answer is the `MatsFuturizer`. This is simply a tool on top of the Mats API - meaning that you could implement this
-yourself using Mats only.
+yourself using the Mats API only.
 
 The solution is twofold:
 1. Ensure that the reply comes back to _this_ replica/node. Simple: Use a replica/node-specific replyTo Terminator
@@ -73,4 +73,4 @@ _JavaDoc of `MatsFuturizer` [here](https://mats3.io/javadoc/mats3/0.19/modern/io
 
 Okay, creating Mats endpoints, Flow initiations and async-sync bridge: Nailed. But you're in a Spring setting, and using
 programmatic Java to configure Mats Endpoints feels a bit last century. Annotations
-rocks! [next chapter](/docs/springconfig/) _(Or go to [explore](/docs/explore)!)_
+rocks! [next chapter](/docs/springconfig/) _(Or go to [explore](/explore)!)_

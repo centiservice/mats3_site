@@ -35,7 +35,7 @@ docs:
       - title: "MatsBrokerMonitor"
         url: /docs/matsbrokermonitor/
       - title: "Explore Mats"
-        url: /docs/explore/
+        url: /explore/
   - title: Explore
     url: /explore/
     children:

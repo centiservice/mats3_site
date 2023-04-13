@@ -55,4 +55,4 @@ inspect a queue, and JMS consume and produce to move a message from a DLQ back o
 Mats stage. This functionality thus works across any broker that implements the JMS API. And is defined in the
 `MatsBrokerBrowseAndActions`, and the JMS implementation is `JmsMatsBrokerBrowseAndActions`.
 
-This concludes the walkthrough, you should now explore Mats<sup>3</sup> code! Go to [next chapter](/docs/explore/)!
+This concludes the walkthrough, you should now explore Mats<sup>3</sup> code! Go to [next chapter](/explore/)!
