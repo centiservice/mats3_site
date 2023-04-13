@@ -367,6 +367,15 @@ Hit up [http://localhost:8080/](http://localhost:8080/).
 Note that this also starts the 'LocalInspect' tool which lets you introspect the MatsFactory and all its Endpoints, with
 rudimentary statistics of invocations etc.
 
+If you start the SimpleService instances, as well as the above webserver, with the `-Dwarn` switch, you will avoid
+logging in the console. (At least on my machine, the console is way slower than a file when it comes to output, so the
+speed is held back by the actual log output.) Now run a bunch of runs with the 1000 calls URL to warm up the multiple
+running JVMs. If you scroll down to the bottom of the browser, you should see some timings there. Remember that this
+Servlet is sequentially issuing, transactionally, one and one message to the broker via the MatsFuturizer. Each message
+is then processed by an instance of SimpleService, transactionally, and then a new message is sent back.
+
+![Output on browser when running 1000 calls](/assets/images/explore/SimpleService_browser_1000calls-2023-04-14_01-24.png)
+
 ## Conclusion
 
 This concludes the Mats3 with JBang introduction! This should hopefully have given a glimmer of understanding of
