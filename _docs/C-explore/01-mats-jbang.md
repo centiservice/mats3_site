@@ -26,16 +26,16 @@ If you've used Groovy, you might know of the 'Grapes' concept, whereby you in a 
 `@Grab` annotations and `Grape.grab(..)` method calls which can pull in dependencies and make them available to the
 subsequent code. Also, Groovy can directly invoke a source code file, like a script executor.
 
-Java 11 introduced the ability to invoke a single Java source file directly via the `java` command. It also
-supports "shebang" notation, where you put the command to run on the first line of the file, like 
-`#!/bin/java --source 11`. However, it did nothing with dependencies, like with Groovy's Grapes, thus severely limiting
-its usefulness.
+Java 11 introduced the ability to invoke a single Java source file directly via the `java` command. It also supports 
+the unix "shebang" notation, where you put the command to run on the first line of the file, like
+`#!/bin/java --source 11`, and can thus invoke the file itself like an executable. However, it did nothing with
+dependencies, like with Groovy's Grapes, thus severely limiting its usefulness.
 
-In comes JBang! By running a Java source file using the `jbang` command, you can run it directly, and with special
-comment notation, you can specify which Java version to run with (downloading it if not present), and what dependencies
-to download. It also supports shebang, albeit with "//" as the first letters - which several unix shells supports. Jbang
-can also run files directly from the internet, and also have a *jbang-catalog* feature where you indirectly can point to
-a file - more on this later.  
+**In comes JBang!** By running a Java source file using the `jbang` command, you can run it directly, and with special
+comment notation, you can specify which Java version to run the source with (automatically downloading the version if
+not present), and what dependencies to download. It also supports shebang, albeit with "//" as the first letters - which
+several unix shells supports. Jbang can also run files directly from the internet, and also have a *jbang-catalog*
+feature where you indirectly can point to a file - more on this later.
 
 > *Security note:* By using these scripts, and in particular the jbang-catalog commands, you implicitly trust the
 > author completely. Jbang will point this out when you invoke files directly from the internet, but since the scripts 
@@ -52,10 +52,16 @@ a file - more on this later.
 > curl: `apt-get update; apt-get install curl nano git -y` - nano/pico is nice to have for editing these scripts, and
 > git is good for cloning down the 'mats-jbang' project. 
 
-To install JBang, go to its site: [https://jbang.dev/download/](https://jbang.dev/download/). Short form for Linux, and
-the container described above, and Mac: `curl -Ls https://sh.jbang.dev | bash -s - app setup` or, if you have *SDKMan*
-already installed: `sdk install jbang` - for Mac there's also Homebrew. There's also multiple solutions for Windows,
-including PS, Chocolatey and Scoop.
+To install JBang, go to its site: [https://jbang.dev/download/](https://jbang.dev/download/).
+
+Short form for Linux, and the container described above, and Mac:
+
+```shell
+curl -Ls https://sh.jbang.dev | bash -s - app setup
+```
+
+Alternatively, if you have *SDKMan* already installed: `sdk install jbang`. For Mac there's also Homebrew. There's also
+multiple solutions for Windows, including PS, Chocolatey and Scoop.
 
 ## Run ActiveMQ
 
@@ -80,11 +86,11 @@ public class ActiveMqMinimal {
 }
 ```
 
-Then either `chmod 755 ActiveMqMinimal.java` and then run it: `./ActiveMqMinimal.java` - or run it via jbang:
+Then either `chmod 755 ActiveMqMinimal.java`, and run it: `./ActiveMqMinimal.java`. Or run it via jbang:
 `jbang ActiveMqMinimal.java` (the latter mode is needed if you want to supply system properties to Java, e.g. `-Dwarn`
 to turn down the log level)
 
-This sets up a ActiveMQ instance. It is "Mats3 optimized" in that it configures certain features, but Mats3 works fully
+This fires up an ActiveMQ instance. It is "Mats3 optimized" in that it configures certain features, but Mats3 works fully
 on a stock ActiveMQ server too. It has no GUI, just being accessible on standard port 61616. It also doesn't have
 persistence, but you can add that by adding `ActiveMQ.PERSISTENT` to the flags.
 
@@ -189,7 +195,7 @@ public class SimpleServiceCall {
                 MatsTestHelp.traceId(), "SimpleServiceMainFuturization.main.1", "SimpleService.simple",
                 SimpleServiceReplyDto.class, new SimpleServiceRequestDto(1, "TestOne"));
         // Sync wait for the reply
-        System.out.println("######## Got reply #1! " + future.get().getReply());
+        System.out.println("######## Got reply! " + future.get().getReply());
 
         // Clean up
         matsFuturizer.close();
@@ -205,21 +211,24 @@ public class SimpleServiceCall {
 }
 ```
 
-Run it as shown previously. Alternatively, run `jbang SimpleServiceMainFuturization@centiservice` ([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/simple/SimpleService.java)) (note that this files makes
-three such calls).
+Run it as shown previously. Alternatively, run `jbang SimpleServiceMainFuturization@centiservice` ([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/simple/SimpleService.java)) (note that this 
+catalog-variant makes three such calls).
 
-If you want to avoid the logging, to see the `System.out` reply, you may invoke it using the `-Dwarn` switch, as such:
-`jbang -Dwarn SimpleServiceCall.java`, or from the catalog `jbang -Dwarn SimpleServiceMainFuturization@centiservice`.
+If you want to avoid the logging, to more clearly see the `System.out` reply, you may invoke it using the `-Dwarn`
+switch, as such: `jbang -Dwarn SimpleServiceCall.java`, or from the
+catalog `jbang -Dwarn SimpleServiceMainFuturization@centiservice`.
 
 If you followed the advice of running more than once instance of `SimpleService.java`, you can run the call a few times,
 and witness that the invocations will be processed round-robin by the instances. Note that since the MatsFactory
 *concurrency* is set to 2 by the `MatsJbangKit` tool, meaning that there will be two threads consuming from this
-particular queue, you will typically get two messages processed by instance 1, then two by instance 2 etc.
+particular queue, you will typically have the first two messages processed by instance 1, then the next two by instance
+2 etc.
 
 ## Experience the magic of queuing
 
 Now, kill all instances of `SimpleService.java` (Ctrl-C), and then run the `SimpleServiceCall.java` again. You will now
-obviously not get the message about received reply, as the CompletableFuture will just hang waiting for a reply.
+obviously not get the log line about a received reply, as there are no consumers of this queue, and thus the
+CompletableFuture will just hang waiting for a reply.
 
 However, the message should reside on the queue of `SimpleService.simple`. Let's check the MatsBrokerMonitor:
 
@@ -385,7 +394,7 @@ is then processed by an instance of SimpleService, transactionally, and then a n
 ## Conclusion
 
 This concludes the Mats3 with JBang introduction! This should hopefully have given a glimmer of understanding of
-how Mats3 works.
+how Mats3 works, as well as showing that JBang can help when exploring Mats<sup>3</sup>!
 
 The Github project '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' contains all the
 above files, as well as several others which demonstrates a tad more advanced elements, including multi-stage endpoints.
