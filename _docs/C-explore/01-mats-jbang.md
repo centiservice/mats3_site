@@ -10,9 +10,15 @@ classes: wide
 [JBang](https://jbang.dev/)'s tagline is: *"Lets Students, Educators and Professional Developers create, edit and run
 self-contained source-only Java programs with unprecedented ease."*
 
-We'll first introduce JBang, and explain how to install it. We'll then take up an ActiveMQ instance using a very small
-JBang script. Next we'll take up a simple single-stage Mats Endpoint, and finally invoke this endpoint a single time,
-using a demonstration-only main-class.
+[Mats<sup>3</sup>](https://mats3.io/)'s tagline is *"Message-Oriented Async RPC. Message-based Interservice Communication
+made easy! Naturally resilient and highly available microservices, with great DevX and OpsX."*
+
+We'll first introduce JBang, and explain how to install it. We'll then take up an *ActiveMQ Message Broker* instance
+using a very small JBang script. Next we'll spin up a simple single-stage Mats Endpoint in a new JBang script and a new
+shell/console. Finally, we'll invoke this Mats Endpoint, using a demonstration-only main-class, using yet another new
+JBang script in yet another new shell. This is meant to demonstrate how Mats<sup>3</sup> is an interesting *Interservice
+Communication* tool, and show how the JBang support tools of Mats<sup>3</sup> can make exploration of Mats<sup>3</sup>
+dead simple.
 
 ## What's *JBang* and how to install
 
