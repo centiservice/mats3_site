@@ -1,7 +1,7 @@
 ---
 title: "JBang! and Mats3"
 permalink: /explore/mats-jbang/
-excerpt: "JBang can help in understanding Mats3, and small helper 'MatsJbangKit' has been made to strip away boilerplate."
+excerpt: "JBang can help in understanding Mats3, and some small helper classes like 'MatsJbangKit' has been made to strip away boilerplate when making JBang scripts."
 created_at: 2023-04-11T22:05
 last_modified_at: 2023-04-11T22:05
 classes: wide
