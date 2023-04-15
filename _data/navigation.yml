@@ -39,10 +39,12 @@ docs:
   - title: Explore
     url: /explore/
     children:
-      - title: "JBang with Mats3"
+      - title: "JBang and Mats<sup>3</sup>"
         url: /explore/jbang-mats/
-      - title: "Source code"
-        url: /explore/source-code/
+      - title: "JBang - Mats3 SpringConfig"
+        url: /explore/jbang-mats-springconfig/
+      - title: "Mats<sup>3</sup> Source Code"
+        url: /explore/mats-source-code/
   - title: Background
     children:
       - title: "What is Mats?"

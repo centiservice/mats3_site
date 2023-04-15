@@ -19,9 +19,9 @@ However, if your app is Spring oriented, you might want to define Mats Endpoints
 ## @EnableMats
 
 And there is a solution for this. This entails annotating some Spring `@Configuration` class with `@EnableMats`, which
-enables annotation scanning for Mats-annotations. The `@MatsMapping` annotation can be added to a method of a Spring
-Bean, for creating single-stage and Terminator Endpoints. The `@MatsClassMapping` annotation can be added to a class
-to define a multi-stage Endpoint.
+enables bean scanning for Mats-annotations. The `@MatsMapping` annotation can be added to a method of a Spring Bean, for
+creating single-stage and Terminator Endpoints. The `@MatsClassMapping` annotation can be added to a class to define a
+multi-stage Endpoint.
 
 ## @MatsMapping
 
@@ -111,7 +111,7 @@ testing. Depending on your acceptance of "magic", this can be a bit head-twistin
 natural.
 
 It is explained more thoroughly
-in [Endpoints and Initiations](https://github.com/centiservice/mats3/blob/main/docs/developing/EndpointsAndInitiations.md),
+in [Endpoints, Stages and Initiations](/using-mats/endpoints-and-initiations/),
 and the [@MatsClassMapping JavaDoc](https://mats3.io/javadoc/mats3/0.19/modern/io/mats3/spring/MatsClassMapping.html)
 
 So, Mats has an integration with Spring, which is great for developers. But there's more, and this stuff also needs to

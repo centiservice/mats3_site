@@ -17,14 +17,15 @@ We'll first introduce JBang, and explain how to install it. We'll then take up a
 using a very small JBang script. Next we'll spin up a simple single-stage Mats Endpoint in a new JBang script and a new
 shell/console. Finally, we'll invoke this Mats Endpoint, using a demonstration-only main-class, using yet another new
 JBang script in yet another new shell. This is meant to demonstrate how Mats<sup>3</sup> is an interesting *Interservice
-Communication* tool, and show how the JBang support tools of Mats<sup>3</sup> can make exploration of Mats<sup>3</sup>
+Communication* tool, and show how the JBang support kit of Mats<sup>3</sup> can make exploration of Mats<sup>3</sup>
 dead simple.
 
 ## What's *JBang* and how to install
 
 If you've used Groovy, you might know of the 'Grapes' concept, whereby you in a single Java source file can include
 `@Grab` annotations and `Grape.grab(..)` method calls which can pull in dependencies and make them available to the
-subsequent code. Also, Groovy can directly invoke a source code file, like a script executor.
+subsequent code. Also, Groovy can directly invoke a Java source code file, like a script executor. The combination is
+pretty weighty, allowing you to make the wildest programs with the full Maven Central of dependencies in a single file! 
 
 Java 11 introduced the ability to invoke a single Java source file directly via the `java` command. It also supports 
 the unix "shebang" notation, where you put the command to run on the first line of the file, like
@@ -43,11 +44,11 @@ feature where you indirectly can point to a file - more on this later.
 > There could be `System.exec("format C:\")` or worse inside these classes. You can not even trust it after having
 > read the source on github, as the libraries uploaded to Maven Central could contain something completely different.
 > 
-> To avoid this problem, you could run this stuff inside a container. In that case, note that since the entire point
+> To avoid these problems, you could run this stuff inside a container. In that case, note that since the entire point
 > of the following exercises is networking, the easiest way would be to use a single container, which you run multiple
 > shells inside. Start a detached container (mapping out a bunch of ports so that you can access ActiveMQ and HTTP
-> servers inside) `docker run -tdp 0.0.0.0:8000-8200:8000-8200 -p61616:61616 ubuntu`, and then start multiple
-> shells inside the same container: `docker exec -it <container_id> bash` (the container-id is shown when making the
+> servers inside) `docker run -td -p0.0.0.0:8000-8200:8000-8200 -p61616:61616 ubuntu`, and then start multiple shells
+> inside the same container: `docker exec -it <container_id> bash` (the container-id is shown when making the
 > detached container, and also with `docker ps`). To use the JBang curl installation below, you must first get hold of
 > curl: `apt-get update; apt-get install curl nano git -y` - nano/pico is nice to have for editing these scripts, and
 > git is good for cloning down the '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' project.
@@ -146,7 +147,7 @@ public class SimpleService {
 Run it as shown previously. Alternatively, run `jbang SimpleService@centiservice` ([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/simple/SimpleService.java)).
 
 Notice the use of the class `MatsJbangKit`, which contains a set of convenience functions to quickly get hold of pieces
-needed to make such JBang scripts with minimal boilerplate. Most notably the `MatsFactory` which is needed for all
+needed to create such JBang scripts with minimal boilerplate. Most notably the `MatsFactory` which is needed for all
 interaction with Mats3: Making Endpoints, and performing Initiations. The methods are short, but it would nevertheless
 be annoying to write these lines for each script file. It makes more sense to focus on the actual Mats interactions,
 instead of the code for pulling up the infrastructure.
@@ -160,8 +161,14 @@ By clicking on the message count for the single stage, you'll go to the queue. I
 
 ![Browing queue of SimpleService.simple](/assets/images/explore/MatsBrokerMonitor_after_SimpleService.simple_boot_queue_2023-04-13_22-13.png)
 
+## Ensure "High Availability"!
+
 **Just to be on the safe side wrt. high availability of this service, start the same file a few more times (in a few
-more shells).** When messages are sent to its queue, ActiveMQ will round-robin them to the instances.
+more shells).** When messages are sent to the Mats Endpoint's queue, ActiveMQ will round-robin them to the multiple
+instances you've started.
+
+Of course, since they're all running on the same host, most probably your laptop, the availability takes a hit if you
+close the lid. But in production you'd probably run those different instances on different machines.
 
 ## Make a "futurized" call to the service
 
@@ -219,10 +226,10 @@ switch, as such: `jbang -Dwarn SimpleServiceCall.java`, or from the
 catalog `jbang -Dwarn SimpleServiceMainFuturization@centiservice`.
 
 If you followed the advice of running more than once instance of `SimpleService.java`, you can run the call a few times,
-and witness that the invocations will be processed round-robin by the instances. Note that since the MatsFactory
-*concurrency* is set to 2 by the `MatsJbangKit` tool, meaning that there will be two threads consuming from this
-particular queue, you will typically have the first two messages processed by instance 1, then the next two by instance
-2 etc.
+and witness that the invocations will be processed round-robin by the instances, by observing the log lines appearing on
+the different consoles. Note that since the MatsFactory *concurrency* is set to 2 by the `MatsJbangKit` tool, meaning
+that there will be two threads consuming from this particular queue, you will typically have the first two messages
+processed by instance 1, then the next two by instance 2 etc.
 
 ## Experience the magic of queuing
 
@@ -230,13 +237,15 @@ Now, kill all instances of `SimpleService.java` (Ctrl-C), and then run the `Simp
 obviously not get the log line about a received reply, as there are no consumers of this queue, and thus the
 CompletableFuture will just hang waiting for a reply.
 
-However, the message should reside on the queue of `SimpleService.simple`. Let's check the MatsBrokerMonitor:
+However, the message should reside on the queue of `SimpleService.simple`. Let's check the
+[MatsBrokerMonitor](http://localhost:8000/matsbrokermonitor?browse&destinationId=queue:mats.SimpleService.simple)
+(Click the link if you started the ActiveMQ from the jbang-catalog above):
 
 ![Browing queue of SimpleService.simple](/assets/images/explore/MatsBrokerMonitor_after_SimpleService.simple_call_without_service_2023-04-13_23-31.png)
 
-Look at that, a queued message!
+Look at that, a queued message! *(If it's not there, you were very fast. Hit the "Update Now!" button)*
 
-Now, lets hit the "view" button:
+Now, lets hit the "view" button on the message:
 ![Examine message of SimpleService.simple queue](/assets/images/explore/MatsBrokerMonitor_after_SimpleService.simple_call_without_service_messageview_2023-04-13_23-36.png)
 
 As we can see, there's pretty detailed information about the message - you should take a few minutes to read through
@@ -293,16 +302,19 @@ public class SpringSimpleService {
 }
 ```
 
-Run it as shown previously.
+Run it as shown previously. Alternatively, run `jbang SpringSimpleService@centiservice`
+([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/spring/SpringSimpleService.java)).
 
 The endpoint is identical to the pure-Java variant, just using SpringConfig's `@MatsMapping` which is put on methods.
-(There's also `@MatsClassMapping` which is put on classes, for multi-stage endpoints. There's of course an 
-[example](https://github.com/centiservice/mats3-jbang/blob/main/jbang/spring/SpringMediumService.java) of
-that in the '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' project)
+You can run a few instances of each, to really achieve "high availability" of this endpoint - now even with differing
+code bases for the same endpoint!
+
+There's also `@MatsClassMapping` which is put on classes, for multi-stage endpoints. The article 
+[JBang - Mats SpringConfig](/explore/jbang-mats-springconfig/) gives an example of this.
 
 ## Bonus 2: Fire up a webserver using MatsFuturizer
 
-A HTTP server using MatsFuturizer - put in a file `SimpleServiceHttpServer.java`:
+A HTTP server using MatsFuturizer - put the following in a file `SimpleServiceHttpServer.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
@@ -327,7 +339,7 @@ public class SimpleServiceHttpServer {
         MatsJbangJettyServer.create(8080)
                 .addMatsFactory() // Creates a MatsFactory, using appName = calling class.
                 .addMatsFuturizer() // Creates a MatsFuturizer, using the ServletContext MatsFactory
-                .addMatsLocalInspect() // Includes 'localinspect' local MatsFactory Monitor
+                .addMatsLocalInspect() // Includes 'localinspect' HTML local MatsFactory Monitor
                 .setRootHtlm("""
                         <html><body>
                         <h1>Basic Servlet MatsFuturizer Example, sync and async, sequentially issued</h1>
@@ -393,8 +405,10 @@ is then processed by an instance of SimpleService, transactionally, and then a n
 
 ## Conclusion
 
-This concludes the Mats3 with JBang introduction! This should hopefully have given a glimmer of understanding of
-how Mats3 works, as well as showing that JBang can help when exploring Mats<sup>3</sup>!
+This concludes the Mats<sup>3</sup> with JBang introduction! This should hopefully have given a glimmer of understanding 
+of how Mats<sup>3</sup> works, as well as showing that JBang can help when exploring Mats<sup>3</sup>!
+
+There's a follow-up using JBang to show Mats<sup>3</sup> SpringConfig [here](/explore/jbang-mats-springconfig/)!
 
 The Github project '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' contains all the
 above files, as well as several others which demonstrates a tad more advanced elements, including multi-stage endpoints.

@@ -10,7 +10,7 @@ classes: wide
 Learning Mats3 should be done both by reading documentation, but also explore, experiment, investigate
 and play around with code.
 
-To that end, a set of [JBang! examples](/explore/mats-jbang/) have been created, which can be used as a base for
+To that end, a set of [JBang! examples](/explore/jbang-mats/) have been created, which can be used as a base for
 experimenting.
 
 Also, the [source code of Mats3](/explore/source-code/) is supposed to be nicely organized, and there is

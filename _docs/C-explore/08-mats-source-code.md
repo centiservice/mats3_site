@@ -1,6 +1,6 @@
 ---
-title: "Source code"
-permalink: /explore/source-code/
+title: "Mats<sup>3</sup> Source Code"
+permalink: /explore/mats-source-code/
 excerpt: "Mats3 source code is nicely organized, and has quite a bit of tests. It is worth checking out."
 created_at: 2022-12-24T11:31
 last_modified_at: 2023-04-11T21:54
