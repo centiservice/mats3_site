@@ -40,7 +40,7 @@ docs:
     url: /explore/
     children:
       - title: "JBang with Mats3"
-        url: /explore/mats-jbang/
+        url: /explore/jbang-mats/
       - title: "Source code"
         url: /explore/source-code/
   - title: Background

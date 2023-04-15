@@ -1,9 +1,9 @@
 ---
-title: "JBang! and Mats3"
-permalink: /explore/mats-jbang/
+title: "JBang! and Mats<sup>3</sup>"
+permalink: /explore/jbang-mats/
 excerpt: "JBang can help in understanding Mats3, and some small helper classes like 'MatsJbangKit' has been made to strip away boilerplate when making JBang scripts."
 created_at: 2023-04-11T22:05
-last_modified_at: 2023-04-11T22:05
+last_modified_at: 2023-04-15T13:56
 classes: wide
 ---
 
@@ -38,9 +38,9 @@ several unix shells supports. Jbang can also run files directly from the interne
 feature where you indirectly can point to a file - more on this later.
 
 > *Security note:* By using these scripts, and in particular the jbang-catalog commands, you implicitly trust the
-> author completely. Jbang will point this out when you invoke files directly from the internet, but since the scripts 
-> presented here invokes random classes from the Mats3 libraries, this also requires a severe level of trust: There
-> could be `System.exec("format C:\")` or worse inside these classes. You can not even trust it after having
+> author completely. Jbang will point this out when you invoke files directly from the internet. However, since even the
+> scripts presented here invokes random classes from the Mats3 libraries, this also requires a severe level of trust:
+> There could be `System.exec("format C:\")` or worse inside these classes. You can not even trust it after having
 > read the source on github, as the libraries uploaded to Maven Central could contain something completely different.
 > 
 > To avoid this problem, you could run this stuff inside a container. In that case, note that since the entire point
@@ -50,7 +50,7 @@ feature where you indirectly can point to a file - more on this later.
 > shells inside the same container: `docker exec -it <container_id> bash` (the container-id is shown when making the
 > detached container, and also with `docker ps`). To use the JBang curl installation below, you must first get hold of
 > curl: `apt-get update; apt-get install curl nano git -y` - nano/pico is nice to have for editing these scripts, and
-> git is good for cloning down the 'mats-jbang' project. 
+> git is good for cloning down the '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' project.
 
 To install JBang, go to its site: [https://jbang.dev/download/](https://jbang.dev/download/).
 
