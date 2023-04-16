@@ -72,7 +72,7 @@ the ActiveMQ Message Broker. Put the following in a file `ActiveMqMinimal.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 import io.mats3.examples.jbang.MatsJbangKit;
 import io.mats3.test.broker.MatsTestBroker;
@@ -118,7 +118,7 @@ in a new terminal/shell. Put this in a file `SimpleService.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 import io.mats3.examples.jbang.MatsJbangKit;
 
@@ -135,7 +135,7 @@ public class SimpleService {
     }
 
     // ----- Contract Request and Reply DTOs
-    
+
     record SimpleServiceRequestDto(int number, String string) {
     }
 
@@ -168,7 +168,7 @@ more shells).** When messages are sent to the Mats Endpoint's queue, ActiveMQ wi
 instances you've started.
 
 Of course, since they're all running on the same host, most probably your laptop, the availability takes a hit if you
-close the lid. But in production you'd probably run those different instances on different machines.
+close the lid. But in production you'd probably want to run those different instances on different machines.
 
 ## Make a "futurized" call to the service
 
@@ -179,11 +179,13 @@ creates a new Mats Endpoint (a SubscriptionTerminator) which is node-specific. I
 desired Endpoint, setting the replyTo parameter to target the new receiver Endpoint. It uses a correlation Id to wake up
 the correct future when replies come back in.
 
+Make sure to understand that this is for demonstration purposes only - read the comment in the code.
+
 Shove the following into a file called `SimpleServiceCall.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 import io.mats3.examples.jbang.MatsJbangKit;
 import io.mats3.test.MatsTestHelp;
@@ -197,7 +199,9 @@ public class SimpleServiceCall {
     public static void main(String... args) throws Exception {
         MatsFuturizer matsFuturizer = MatsJbangKit.createMatsFuturizer();
 
-        // A "futurization" to the 'SimpleService.simple' MatsEndpoint
+        // A "futurization" to the 'SimpleService.simple' MatsEndpoint - demonstration purpose!
+        // NOTE: You would never do such a single-use, possibly repeated instantiation of MatsFuturizer in prod:
+        // The MatsFuturizer is a singleton, long-lived Java service, meant to live inside a long-lived JVM.
         CompletableFuture<Reply<SimpleServiceReplyDto>> future = matsFuturizer.futurizeNonessential(
                 MatsTestHelp.traceId(), "SimpleServiceMainFuturization.main.1", "SimpleService.simple",
                 SimpleServiceReplyDto.class, new SimpleServiceRequestDto(1, "TestOne"));
@@ -219,7 +223,7 @@ public class SimpleServiceCall {
 ```
 
 Run it as shown previously. Alternatively, run `jbang SimpleServiceMainFuturization@centiservice` ([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/simple/SimpleService.java)) (note that this 
-catalog-variant makes three such calls).
+catalog-variant makes three such calls: First a single like above, sync wait, and then two in parallel).
 
 If you want to avoid the logging, to more clearly see the `System.out` reply, you may invoke it using the `-Dwarn`
 switch, as such: `jbang -Dwarn SimpleServiceCall.java`, or from the
@@ -273,7 +277,7 @@ Put the following in `SpringSimpleService.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 import io.mats3.examples.jbang.MatsJbangKit;
 import io.mats3.spring.EnableMats;
@@ -318,7 +322,7 @@ A HTTP server using MatsFuturizer - put the following in a file `SimpleServiceHt
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 import io.mats3.examples.jbang.MatsJbangJettyServer;
 import io.mats3.test.MatsTestHelp;
@@ -393,6 +397,11 @@ Hit up [http://localhost:8080/](http://localhost:8080/).
 
 Note that this also starts the 'LocalInspect' tool which lets you introspect the MatsFactory and all its Endpoints, with
 rudimentary statistics of invocations etc.
+
+You may fire up multiple instances of this too: The subsequent instances will just grab the next available port above
+8080 (it'll try at most 10 ports upwards). You can envision that you put such multiple instances behind a HTTP load
+balancer, and thus have a high availability setup for the webserver too. (ActiveMQ can also be set up in a *hot standby*
+configuration, but this is not covered here)
 
 If you start the SimpleService instances, as well as the above webserver, with the `-Dwarn` switch, you will avoid
 logging in the console. (At least on my machine, the console is way slower than a file when it comes to output, so the

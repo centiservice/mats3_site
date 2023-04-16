@@ -42,7 +42,7 @@ Put the following in a file `SpringMediumService.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 package spring;
 
@@ -186,7 +186,7 @@ Stuff the following into `SpringMediumServiceCall.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 package spring;
 
@@ -236,10 +236,12 @@ default timeout for the MatsFuturizer of 150 seconds. Actually, it is quite cool
 bit that the service isn't running when you start the call: Once it has put the message on the target service's Endpoint
 queue, it doesn't know or care whether it takes 1 ms, or 2 minutes, to get the reply.
 
-_(This is a sync setting, and there are typically timeouts involved on the "edges" of the Mats Fabric. When running
-system-internal processes, a delay of days wouldn't matter (except due to business requirements): You could take down
-the entire system from AWS, and set it back up in Azure, and once you again fire up the different services and the
-message broker, all 'Mats Flows' would just start up again from wherever they stopped.)_
+_(Timeouts are often involved at the "edges" of the Mats Fabric, as there is usually a human waiting synchronously for
+the Reply - that's why the MatsFuturizer includes timeout logic. On the other hand, in terms of Mats processing and the
+execution of Mats Flows, a delay of days or weeks is inconsequential, as the messages will simply reside on the broker
+until they are picked up. (However, business requirements might not be as forgiving about such delays!) For example, you
+could dismantle the entire system from AWS, relocate it to Azure, and once the various services and message broker are
+spun up again, all 'Mats Flows' would simply resume from where they left off, regardless of the elapsed time.)_
 
 ## Invoke using a Spring Service
 
@@ -250,7 +252,7 @@ Put this inside `SpringMediumServiceSpringCall.java`:
 ```java
 //usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 17
-//DEPS io.mats3.examples:mats-jbangkit:RC1-1.0.0
+//DEPS io.mats3.examples:mats-jbangkit:1.0.0
 
 package spring;
 
@@ -313,9 +315,9 @@ public class SpringMediumServiceSpringCall {
 Invoke it as shown previously. Alternatively, run the catalog-variant
 `jbang SpringMediumServiceSpringFuturization@centiservice` ([file w/comments](https://github.com/centiservice/mats3-jbang/blob/main/jbang/spring/SpringMediumServiceSpringFuturization.java))
 
-This creates a Spring service bean which autowires/injects the MatsFuturizer. A service method employs the MatsFuturizer
-like previously. From the main class, we fetch this bean from the Spring context, and invoke the service method. A more
-relevant setup would be a Servlet Container, in which case you'd probably inject it into a class with 
+This creates a Spring service bean which autowires/injects the MatsFuturizer. The service has a method employing the
+MatsFuturizer like previously. From the main class, we fetch this bean from the Spring context, and invoke the service
+method. A more relevant setup would be a Servlet Container, in which case you'd probably inject it into a class with
 `@RequestMapping`-annotated methods on it.
 
 While making such clients might seem very tempting, as it resembles how you'd make clients when using REST endpoints for
@@ -327,9 +329,10 @@ and [Designing internal Services when using Mats](/using-mats/designing-internal
 ## Conclusion
 
 You should now understand a bit of how Mats<sup>3</sup> SpringConfig works. By annotating a `@Configuration`-class with
-`@EnableMats`, you enable bean scanning for annotated Mats Endpoints. There are two types: For single-stage Mats
-Endpoints, you can use `@MatsMapping` on methods of Spring beans. For multi-stage Mats Endpoints, you can annotate
-a class with `@MatsClassMapping`.
+`@EnableMats`, you enable bean scanning for annotated Mats Endpoints. There are two types: For single-stage Endpoints
+and Terminators, as well as SubscriptionTerminators, you can use `@MatsMapping` on methods of Spring beans. For
+multi-stage Mats Endpoints, you can annotate a class with `@MatsClassMapping`, providing `@Stage`-annotated methods for
+each stage of the Endpoint.
 
 The Github project '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' contains all the above files, as well as
 several others. It also has the source for `MatsJbangKit` and `MatsJbangJettyServer`, and if you point your
