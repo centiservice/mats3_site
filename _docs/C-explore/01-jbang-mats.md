@@ -7,10 +7,10 @@ last_modified_at: 2023-04-15T13:56
 classes: wide
 ---
 
-[JBang](https://jbang.dev/)'s tagline is: *"Lets Students, Educators and Professional Developers create, edit and run
+[JBang](https://jbang.dev/)'s tagline: *"Lets Students, Educators and Professional Developers create, edit and run
 self-contained source-only Java programs with unprecedented ease."*
 
-[Mats<sup>3</sup>](https://mats3.io/)'s tagline is *"Message-Oriented Async RPC. Message-based Interservice Communication
+[Mats<sup>3</sup>](https://mats3.io/)'s tagline: *"Message-Oriented Async RPC. Message-based Interservice Communication
 made easy! Naturally resilient and highly available microservices, with great DevX and OpsX."*
 
 We'll first introduce JBang, and explain how to install it. We'll then take up an *ActiveMQ Message Broker* instance
