@@ -14,11 +14,13 @@ self-contained source-only Java programs with unprecedented ease."*
 made easy! Naturally resilient and highly available microservices, with great DevX and OpsX."*
 
 We'll first introduce JBang, and explain how to install it. We'll then take up an *ActiveMQ Message Broker* instance
-using a very small JBang script. Next we'll spin up a simple single-stage Mats Endpoint in a new JBang script and a new
-shell/console. Finally, we'll invoke this Mats Endpoint, using a demonstration-only main-class, using yet another new
-JBang script in yet another new shell. This is meant to demonstrate how Mats<sup>3</sup> is an interesting *Interservice
-Communication* tool, and show how the JBang support kit of Mats<sup>3</sup> can make exploration of Mats<sup>3</sup>
-dead simple.
+using a very small JBang script. Next we'll spin up a simple single-stage Mats Endpoint using another JBang script and a
+new shell/console - actually, we'll spin up a few instances of this "service" to demonstrate how high availability and
+load balancing are innate features of message queueing. Finally, we'll invoke this Mats Endpoint, using yet another
+JBang script in yet another shell.
+
+This goal is to demonstrate how Mats<sup>3</sup> is an interesting *Inter-Service Communication* solution, and show how
+the JBang support kit of Mats<sup>3</sup> makes exploration of Mats<sup>3</sup> dead simple.
 
 ## What's *JBang* and how to install
 
