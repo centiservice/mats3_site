@@ -1,7 +1,7 @@
 ---
-title: "Explore"
+title: "Explore Mats<sup>3</sup>"
 permalink: /explore/
-excerpt: "How to get your hands dirty with Mats - explore, experiment, investigate, play around"
+excerpt: "How to get your hands dirty with Mats3 - explore, experiment, investigate, play around"
 created_at: 2023-04-11T21:54
 last_modified_at: 2023-04-11T21:54
 classes: wide
@@ -16,6 +16,11 @@ A set of [JBang! examples](/explore/jbang-mats/) have been created, which can be
 experimenting. [JBang](https://jbang.dev/)'s tagline is: *"Lets Students, Educators and Professional Developers create,
 edit and run self-contained source-only Java programs with unprecedented ease."*, and the idea is that it can run
 single-source-files which include dependencies. And Mats have a nice `MatsJbangKit` to help creating such JBang scripts.
+
+## Read the Walkthrough
+
+If you haven't read it yet, the [Walkthrough docs](http://localhost:4000/docs/message-oriented-rpc/) goes through the
+essential features of Mats<sup>3</sup>.
 
 ## Source code of Mats<sup>3</sup>
 
