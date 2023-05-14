@@ -8,7 +8,7 @@ classes: wide
 ---
 
 
-So, in the [previous chapter](/docs/message-oriented-rpc) we saw how an Endpoint could be constructed. However, an Endpoint
+So, in the [previous chapter](/docs/message-oriented-rpc/) we saw how an Endpoint could be constructed. However, an Endpoint
 picks up messages that arrives on its incoming queue. Granted, other endpoints might put messages there, but this is
 turtles all the way down: Someone has got to _start_ these _Mats Flows_.
 

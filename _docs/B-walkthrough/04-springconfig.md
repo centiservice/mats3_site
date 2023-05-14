@@ -115,4 +115,4 @@ in [Endpoints, Stages and Initiations](/using-mats/endpoints-and-initiations/),
 and the [@MatsClassMapping JavaDoc](https://mats3.io/javadoc/mats3/0.19/modern/io/mats3/spring/MatsClassMapping.html)
 
 So, Mats has an integration with Spring, which is great for developers. But there's more, and this stuff also needs to
-run in production! Over to the [next chapter](/docs/devops-happiness/) _(Or go to [explore](/explore)!)_
+run in production! Over to the [next chapter](/docs/devops-happiness/) _(Or go to [explore](/explore/)!)_

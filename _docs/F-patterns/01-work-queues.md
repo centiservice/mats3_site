@@ -127,4 +127,4 @@ make the same type of document for all customers), and less compelling if there 
 one job would take this route, while another that route, based on job properties.
 
 There are other avenues for batching, and it also introduces new challenges, is explored in the article 
-[Batching](/patterns/batching).
+[Batching](/patterns/batching/).

@@ -272,7 +272,7 @@ restart the call first, before starting the SimpleService).
 
 ## Bonus 1: Make the SimpleService using Mats SpringConfig
 
-Mats3 have a [SpringConfig module](/docs/springconfig), which makes it possible to configure Mats Endpoints using
+Mats3 have a [SpringConfig module](/docs/springconfig/), which makes it possible to configure Mats Endpoints using
 annotations.
 
 Put the following in `SpringSimpleService.java`:

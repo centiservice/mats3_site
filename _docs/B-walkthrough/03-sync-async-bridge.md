@@ -73,4 +73,4 @@ _JavaDoc of `MatsFuturizer` [here](https://mats3.io/javadoc/mats3/0.19/modern/io
 
 Okay, creating Mats endpoints, Flow initiations and async-sync bridge: Nailed. But you're in a Spring setting, and using
 programmatic Java to configure Mats Endpoints feels a bit last century. Annotations
-rocks! [next chapter](/docs/springconfig/) _(Or go to [explore](/explore)!)_
+rocks! [next chapter](/docs/springconfig/) _(Or go to [explore](/explore/)!)_

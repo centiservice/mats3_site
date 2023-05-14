@@ -141,4 +141,4 @@ errors in the total system "crop up" on the message broker. However, to catch th
 See [own article](/docs/matsbrokermonitor/)
 
 Okay, so great tooling - but what is the Intercept API? Onwards to [next chapter](/docs/interception/)!
-_(Or go to [explore](/explore)!)_
+_(Or go to [explore](/explore/)!)_
