@@ -46,25 +46,25 @@ feature where you indirectly can point to a file - more on this later.
 > There could be `System.exec("format C:\")` or worse inside these classes. You can not even trust it after having
 > read the source on github, as the libraries uploaded to Maven Central could contain something completely different.
 > 
-> To avoid these problems, you could run this stuff inside a container. In that case, note that since the entire point
-> of the following exercises is networking, the easiest way would be to use a single container, which you run multiple
-> shells inside. Start a detached container (mapping out a bunch of ports so that you can access ActiveMQ and HTTP
-> servers inside) `docker run -td -p0.0.0.0:8000-8200:8000-8200 -p61616:61616 ubuntu`, and then start multiple shells
-> inside the same container: `docker exec -it <container_id> bash` (the container-id is shown when making the
+> **To avoid these problems, you could run this stuff inside a container.** In that case, note that since the entire
+> point of the following exercises is networking, the easiest way would be to use a single container, which you run
+> multiple shells inside. Start a detached container (mapping out a bunch of ports so that you can access ActiveMQ and
+> HTTP servers inside) `docker run -td -p0.0.0.0:8000-8200:8000-8200 -p61616:61616 ubuntu`, and then start multiple
+> shells inside the same container: `docker exec -it <container_id> bash` (the container-id is shown when making the
 > detached container, and also with `docker ps`). To use the JBang curl installation below, you must first get hold of
-> curl: `apt-get update; apt-get install curl nano git -y` - nano/pico is nice to have for editing these scripts, and
+> curl: `apt-get update; apt-get install curl nano git -y`. Nano/pico is nice to have for editing these scripts, and
 > git is good for cloning down the '[mats3-jbang](https://github.com/centiservice/mats3-jbang)' project.
 
 To install JBang, go to its site: [https://jbang.dev/download/](https://jbang.dev/download/).
 
-Short form for Linux, and the container described above, and Mac:
+Short form for installation on Linux or Mac, and installing inside the container described above:
 
 ```shell
 curl -Ls https://sh.jbang.dev | bash -s - app setup
 ```
 
-Alternatively, if you have *SDKMan* already installed: `sdk install jbang`. For Mac there's also Homebrew. There's also
-multiple solutions for Windows, including PS, Chocolatey and Scoop.
+Alternatively, if you have [SDKMan](https://sdkman.io/) already installed: `sdk install jbang`. For Mac there's also
+Homebrew. There's also multiple solutions for Windows, including PS, Chocolatey and Scoop.
 
 ## Run ActiveMQ
 
@@ -91,11 +91,12 @@ public class ActiveMqMinimal {
 
 Then either `chmod 755 ActiveMqMinimal.java`, and run it: `./ActiveMqMinimal.java`. Or run it via jbang:
 `jbang ActiveMqMinimal.java` (the latter mode is needed if you want to supply system properties to Java, e.g. `-Dwarn`
-to turn down the log level)
+to turn down the log level). Ctrl-C to stop it.
 
-This fires up an ActiveMQ instance. It is "Mats3 optimized" in that it configures certain features, but Mats3 works fully
-on a stock ActiveMQ server too. It has no GUI, just being accessible on standard port 61616. It also doesn't have
-persistence, but you can add that by adding `ActiveMQ.PERSISTENT` to the flags.
+The script fires up an ActiveMQ instance. It is "Mats3 optimized" in that it configures certain features, but Mats3
+works adequately on a stock ActiveMQ server too. It has no GUI, just being accessible on its standard port 61616. The
+instance also doesn't have persistence (it just keeps the messages in memory), but you can add persistence by adding
+`ActiveMQ.PERSISTENT` to the flags.
 
 However, when you have JBang installed, you can use the *jbang-catalog* functionality, and just invoke:
 
@@ -177,7 +178,7 @@ close the lid. But in production you'd probably want to run those different inst
 We'll now use the `MatsFuturizer` tool to invoke this service. This is Mats's "sync-async bridge", whereby you may
 "call" a Mats Endpoint and get a `CompletableFuture` in return. There is some slight magic involved in how the futurizer
 works, which is described in the [Sync-Async Bridge](/docs/sync-async-bridge/) part of the Walkthrough. Essentially, it
-creates a new Mats Endpoint (a SubscriptionTerminator) which is node-specific. It then performs a request to the
+creates a new Mats Endpoint (a _SubscriptionTerminator_) which is node-specific. It then performs a request to the
 desired Endpoint, setting the replyTo parameter to target the new receiver Endpoint. It uses a correlation Id to wake up
 the correct future when replies come back in.
 
@@ -291,7 +292,7 @@ public class SpringSimpleService {
         MatsJbangKit.startSpring();
     }
 
-    // A single-stage Endpoint defined using @MatsMapping
+    // A single-stage Endpoint defined using Mats3 SpringConfig's '@MatsMapping'
     @MatsMapping("SimpleService.simple")
     SimpleServiceReplyDto endpoint(SimpleServiceRequestDto msg) {
         String result = msg.string + ':' + msg.number + ":FromSimple";
