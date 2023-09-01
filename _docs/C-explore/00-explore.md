@@ -19,7 +19,7 @@ single-source-files which include dependencies. And Mats have a nice `MatsJbangK
 
 ## Read the Walkthrough
 
-If you haven't read it yet, the [Walkthrough docs](http://localhost:4000/docs/message-oriented-rpc/) goes through the
+If you haven't read it yet, the [Walkthrough docs](/docs/message-oriented-rpc/) goes through the
 essential features of Mats<sup>3</sup>.
 
 ## Source code of Mats<sup>3</sup>
